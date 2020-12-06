@@ -1,0 +1,115 @@
+boot starter:
+- its a dependency in jar file
+- based on type of component we need .
+
+Handling dependency management is a difficult task for big projects. 
+Spring Boot resolves this problem by providing a set of dependencies for  developers convenience.
+Boot starters:[to handle the all dependencies/jars ] - no need to write multiple <dependency> tag in pom.xml
+Based on the component we are developing in our project we need to include the boot starter in pom.xml
+•	spring-boot-starter: – This is the core starter and includes logging, auto-configuration support, and YAML.
+•	spring-boot-starter-jdbc – This starter is used for HikariCP connection pool with JDBC
+•	spring-boot-starter-web – Is the starter for building web applications, including RESTful, applications using Spring MVC
+•	spring-boot-starter-data-jpa – Is the starter to use Spring Data JPA with Hibernate
+•	spring-boot-starter-security – Is the starter used for Spring Security
+•	spring-boot-starter-aop: This starter is used for aspect-oriented programming with AspectJ and  Spring AOP
+•	spring-boot-starter-test: Is the starter for testing Spring Boot applications
+
+Spring Boot Starter Security dependency is used for Spring Security. Its code is shown below
+
+<dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+
+Spring Boot Starter web dependency is used to write a Rest Endpoints. Its code is shown below
+<dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+Spring Boot Starter Thyme Leaf dependency is used to create a web application. 
+Its code is shown below
+<dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+
+Spring Boot Starter Test dependency is used for writing Test cases. Its code is shown below
+<dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-test<artifactId>
+</dependency>
+
+Ex:
+1.spring-boot-starter-web
+2.spring-boot-starter-test
+3.spring-boot-starter-jpa
+
+steps:
+https://www.java4s.com/spring-boot-tutorials/spring-boot-maven-hello-world-example-step-by-step/
+1.create maven project
+2.add pom.xml with web as starter
+3. maven build
+
+package the jar:
+----------------------
+Adding Spring Boot Maven Plugin
+We can include Maven plugin in our pom.xml file. 
+It is used to package the project as an executable jar. We are adding it here.
+
+<build>  
+    <plugins>  
+        <plugin>  
+            <groupId>org.springframework.boot</groupId>  
+            <artifactId>spring-boot-maven-plugin</artifactId>  
+        </plugin>  
+    </plugins>  
+</build>  
+ 
+
+ 
+ 
+ 
+ spring-boot-starter-thymeleaf	It is used to build MVC web applications using Thymeleaf views.
+spring-boot-starter-data-couchbase	This is used for Couchbase document-oriented database and Spring Data Couchbase.
+spring-boot-starter-artemis	It is used for JMS messaging using Apache Artemis.
+spring-boot-starter-web-services	It is used for Spring Web Services.
+spring-boot-starter-mail	It is used to support Java Mail and Spring Framework's email sending.
+spring-boot-starter-data-redis	It is used for Redis key-value data store with Spring Data Redis and the Jedis client.
+spring-boot-starter-web	It is used for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container.
+spring-boot-starter-data-gemfire	It is used to GemFire distributed data store and Spring Data GemFire.
+spring-boot-starter-activemq	It is used to JMS messaging using Apache ActiveMQ.
+spring-boot-starter-data-elasticsearch	It is used to Elasticsearch search and analytics engine and Spring Data Elasticsearch.
+spring-boot-starter-integration	It is used for Spring Integration.
+spring-boot-starter-test	It is used to test Spring Boot applications with libraries including JUnit, Hamcrest and Mockito.
+spring-boot-starter-jdbc	It is used for JDBC with the Tomcat JDBC connection pool.
+spring-boot-starter-mobile	It is used for building web applications using Spring Mobile.
+spring-boot-starter-validation	It is used for Java Bean Validation with Hibernate Validator.
+spring-boot-starter-hateoas	It is used to build hypermedia-based RESTful web application with Spring MVC and Spring HATEOAS.
+spring-boot-starter-jersey	It is used to build RESTful web applications using JAX-RS and Jersey. An alternative to spring-boot-starter-web.
+spring-boot-starter-data-neo4j	It is used for Neo4j graph database and Spring Data Neo4j.
+spring-boot-starter-data-ldap	It is used for Spring Data LDAP.
+spring-boot-starter-websocket	It is used for building WebSocket. applications using Spring Framework?s WebSocket support.
+spring-boot-starter-aop	It is used for aspect-oriented programming with Spring AOP and AspectJ.
+spring-boot-starter-amqp	It is used for Spring AMQP and Rabbit MQ.
+spring-boot-starter-data-cassandra	It is used for Cassandra distributed database and Spring Data Cassandra.
+spring-boot-starter-social-facebook	It is used for Spring Social Facebook.
+spring-boot-starter-jta-atomikos	It is used for JTA transactions using Atomikos.
+spring-boot-starter-security	It is used for Spring Security.
+spring-boot-starter-mustache	It is used for building MVC web applications using Mustache views.
+spring-boot-starter-data-jpa	It is used for Spring Data JPA with Hibernate.
+spring-boot-starter	It is used for core starter, including auto-configuration support, logging and YAML.
+spring-boot-starter-groovy-templates	It is used for building MVC web applications using Groovy Templates views.
+spring-boot-starter-freemarker	It is used for building MVC web applications using FreeMarker views.
+spring-boot-starter-batch	It is used for Spring Batch.
+spring-boot-starter-social-linkedin	It is used for Spring Social LinkedIn.
+spring-boot-starter-cache	It is used for Spring Framework?s caching support.
+spring-boot-starter-data-solr	It is used for the Apache Solr search platform with Spring Data Solr.
+spring-boot-starter-data-mongodb	It is used for MongoDB document-oriented database and Spring Data MongoDB.
+spring-boot-starter-jooq	It is used for jOOQ to access SQL databases. An alternative to spring-boot-starter-data-jpa or spring-boot-starter-jdbc.
+spring-boot-starter-jta-narayana	It is used for Spring Boot Narayana JTA Starter.
+spring-boot-starter-cloud-connectors	It is used for Spring Cloud Connectors which simplifies connecting to services in cloud platforms like Cloud Foundry and Heroku.
+spring-boot-starter-jta-bitronix	It is used for JTA transactions using Bitronix.
+spring-boot-starter-social-twitter	It is used for Spring Social Twitter.
+spring-boot-starter-data-rest	It is used for exposing Spring Data repositories over REST using Spring Data REST.

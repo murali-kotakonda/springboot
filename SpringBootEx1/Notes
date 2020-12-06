@@ -1,0 +1,65 @@
+Spring Boot:
+-------------
+- spring boot is a flavour on the existing sprimg components.
+-> Spring boot is open source
+->Intially  Intended for micro service apps , then cna be used for any spring projects.
+- Spring Boot uses completely new development model to make Java Development very easy by avoiding some tedious development steps 
+and boilerplate code and configuration.  
+->using a stand-alone[main method]  we can manage any kind of spring projects.
+> spring boot has inbuilt enabled tomcat server.
+  
+Audience:
+----------
+Java
+Springs + MVC + Hibernate + DAO + Maven + web services.
+
+ 
+What is Spring Boot?
+------------------------------------
+- It is easy to create a stand-alone and production ready spring applications using Spring Boot. 
+- Spring Boot has the best infrastructure support for developing a micro service 
+- enables to develop enterprise-ready applications that you can �just run�
+- You can get started with minimum configurations without the need for an entire Spring configuration setup.
+
+- while working with sping boot we dont need any server, spring boot has inbuilt tomcat server
+
+Spring Boot  = Spring Framework + Some Embedded HTTP Servers (Tomcat/Jetty etc.) – XML or Annotations Configurations.
+
+Here minus means we don’t need to write any XML Configuration and few Annotations only.
+
+spring boot has embedded jar files.
+
+features:
+------------
+- spring_boot_starter
+
+
+
+Advantages
+Easy to understand and develop spring applications
+ - to make Java Development very easy and avoid some tedious steps.
+ - to get rid of boilerplate code and configuration. [springs.xml] ==> minimum configuration.
+ - easy to create a stand-alone and production ready spring application that you can just run.
+ - get rid of server[tomcat] as spring boot has embedded server.
+ - Increases productivity & Reduces the development time
+- in pom.xml adding the spring dependencies is simplified using spring boot starter.
+- Consists of a wide range of APIs for monitoring and managing applications
+- 	Security and Logging 
+-	Comes with Spring Boot starters to ensure dependency management
+- Integrates easily with Spring JDBC, Spring ORM, Spring Data, Spring Security easily by avoiding boilerplate code.
+
+
+Ways to create spring boot application?
+1.	Using Spring.io initializer.
+2.	Using Eclipse or any similar IDE and Maven simple project.  -> recommeneded.
+3.	Using Spring Tool Suite.
+4.	Using CLI.
+5.	Spring Boot Project using Spring.io initializer.
+
+
+Goals
+To avoid complex XML configuration in Spring
+To develop a production ready Spring applications in an easier way
+To reduce the development time and run the application independently
+Offer an easier way of getting started with the application
+
