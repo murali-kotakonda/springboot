@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -18,6 +19,9 @@ public class TestApp {
 	      logger.info("this is a info message");
 	      logger.warn("this is a warn message");
 	      logger.error("this is a error message");
-	      SpringApplication.run(TestApp.class, args);
+	      ConfigurableApplicationContext context = SpringApplication.run(TestApp.class, args);
+	      
+	      EmpService service = context.getBean(EmpService.class);
+	      service.process();
 	   }
 }

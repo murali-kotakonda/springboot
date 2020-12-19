@@ -1,0 +1,62 @@
+CrudRepository vs	JpaRepository
+------------------------------------------
+CrudRepository does not provide any method for pagination and sorting.	
+JpaRepository extends PagingAndSortingRepository. It provides all the methods for implementing the pagination.
+
+It works as a marker interface.	
+JpaRepository extends both CrudRepository and PagingAndSortingRepository.
+
+It provides CRUD function only. For example findById(), findAll(), etc.	
+It provides some extra methods along with the method of PagingAndSortingRepository and CrudRepository. For example, flush(), deleteInBatch().
+
+It is used when we do not need the functions provided by JpaRepository and PagingAndSortingRepository.	
+It is used when we want to implement pagination and sorting functionality in an application.
+
+
+
+
+
+assignment:
+--------------
+
+1. consumer app  -> web application
+                  web pages+  controller + service + integration 
+                  spring mvc with rest client 
+                        
+2. producer app -> web services app  + db 
+               controller + service + dao + Data base  
+               no web pages
+               spring boot + JPA/jdbctemplate
+               
+               
+               
+customer --------->   [consumer app ] ------------->  [producer app]  -----> [Data base]
+                        web app                         web service 
+                        
+       
+ Product:
+ --------------
+ id
+ name
+ brand
+ size
+ color
+ price
+ discount
+ gender 
+ 
+ 
+       
+-Create product
+-upate product
+- delete product
+- get all products with pagination + sorting + criteria search
+  filtering
+- get product by id , name
+
+
+                        
+
+               
+               
+                              

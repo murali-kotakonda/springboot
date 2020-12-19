@@ -16,6 +16,4 @@ public class TestApp {
 	      IntegrationService service = context.getBean(IntegrationService.class);
 	      System.out.println(service);
 	   }
-	   
-	   
 }

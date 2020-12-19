@@ -3,34 +3,38 @@ package main;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-@Service
+@Service(value = "pService")
 public class ProductService {
 	@Autowired
-	private ProductDAO articleDAO;
+	@Qualifier("dao2")
+	private Dao dao;
 	
 	public Product getArticleById(int articleId) {
-		Product obj = articleDAO.getArticleById(articleId);
+		Product obj = dao.getArticleById(articleId);
 		return obj;
 	}	
 	public List<Product> getAllArticles(){
-		return articleDAO.getAllArticles();
+		return dao.getAllArticles();
 	}
 
-	public synchronized boolean addArticle(Product article){
-       if (articleDAO.articleExists(article.getTitle(), article.getCategory())) {
+	public  boolean addArticle(Product article){
+        if (dao.articleExists(article.getTitle(), article.getCategory())) {
     	   return false;
        } else {
-    	   articleDAO.addArticle(article);
+    	   dao.addArticle(article);
     	   return true;
-       }
+       } 
+		//dao.addArticle(article);
+		 //return true;
 	}
 
 	public void updateArticle(Product article) {
-		articleDAO.updateArticle(article);
+		dao.updateArticle(article);
 	}
 
 	public void deleteArticle(int articleId) {
-		articleDAO.deleteArticle(articleId);
+		dao.deleteArticle(articleId);
 	}
 }

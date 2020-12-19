@@ -7,18 +7,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 @Entity
-@Table(name="articles")
+@Table(name="ProductNew")
 public class Product implements Serializable { 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="article_id")
     private int articleId;  
+	
 	@Column(name="title")
     private String title;
+	
 	@Column(name="category")	
 	private String category;
+	
 	public int getArticleId() {
 		return articleId;
 	}
@@ -37,4 +41,26 @@ public class Product implements Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + articleId;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (articleId != other.articleId)
+			return false;
+		return true;
+	}
+	
+	
 } 
