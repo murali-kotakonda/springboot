@@ -42,3 +42,8 @@ Now that we have created the text index on post_text field, we will search for a
 		"tutorialspoint"
 	]
 }
+
+
+
+
+db.posts.dropIndex("post_text_text")
