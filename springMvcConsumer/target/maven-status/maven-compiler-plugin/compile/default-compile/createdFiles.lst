@@ -1,0 +1,11 @@
+com\app\IntegrationService.class
+com\app\WebConfig.class
+com\devglan\controller\UserController.class
+com\app\Product.class
+com\app\ProductResponseInfo.class
+com\app\MyController.class
+com\devglan\service\impl\UserServiceImpl.class
+com\app\AppInitializer.class
+com\devglan\service\UserService.class
+com\devglan\model\UserDetails.class
+com\app\ProductService.class
