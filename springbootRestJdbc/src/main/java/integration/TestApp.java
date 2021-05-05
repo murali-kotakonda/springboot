@@ -15,5 +15,7 @@ public class TestApp {
 	      ConfigurableApplicationContext context = SpringApplication.run(TestApp.class, args);
 	      IntegrationService service = context.getBean(IntegrationService.class);
 	      System.out.println(service);
+	      String productList = service.getProductList();
+	      System.out.println(service);
 	   }
 }
