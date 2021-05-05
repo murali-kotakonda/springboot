@@ -71,9 +71,9 @@ public class EmpController {
 	 */
 	@RequestMapping(value = "/myjson", method =RequestMethod.GET,produces = {"application/json"})
 	public ResponseEntity getJson() {
-		EmpResponse emp =  new EmpResponse("success") ;
+		AppResponse res =  new AppResponse("success") ;
 		//return new ResponseEntity(emp, HttpStatus.OK);
-		return new ResponseEntity(emp, HttpStatus.OK); //returns response entity obj that has data + responsecode
+		return new ResponseEntity(res, HttpStatus.OK); //returns response entity obj that has data + responsecode
 	}
 	
 	/**
@@ -92,8 +92,8 @@ public class EmpController {
 	 */
 	@RequestMapping(value = "/myxml", method =RequestMethod.GET,produces = {"application/xml"})
 	public ResponseEntity getXml() {
-		EmpResponse emp =  new EmpResponse("success") ;
-		return new ResponseEntity(emp, HttpStatus.OK); //returns response entity obj that has data + responsecode
+		AppResponse res =  new AppResponse("success") ;
+		return new ResponseEntity(res, HttpStatus.OK); //returns response entity obj that has data + responsecode
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class EmpController {
 	@RequestMapping(value = "/mydata", method =RequestMethod.GET,
 			produces = {"application/xml","application/json"})
 	public ResponseEntity getData() {
-		EmpResponse emp =  new EmpResponse("success") ;
+		AppResponse emp =  new AppResponse("success") ;
 		return new ResponseEntity(emp, HttpStatus.OK); //returns response entity obj that has data + responsecode
 	}
 

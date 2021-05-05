@@ -23,9 +23,9 @@ public class ProductController {
 	
 	// @GetMapping(value="products" , produces = "application/json")
 	@RequestMapping(value = "products", produces = "application/json")
-	public ResponseEntity<List<Product>> getAllArticles() {
+	public ResponseEntity<ProductResponseInfo> getAllArticles() {
 		List<Product> list = articleService.getAllArticles();
-		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
+		return new ResponseEntity(new ProductResponseInfo("success", list), HttpStatus.OK);
 	}
 
 	// @GetMapping(value="product/{id}" , produces = "application/json")
@@ -49,7 +49,7 @@ public class ProductController {
 	public ResponseEntity<Void> addArticle(@RequestBody Product article, UriComponentsBuilder builder) {
                 boolean flag = articleService.addArticle(article);
                 if (!flag) {
-                	return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+                	return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
                 }
                 HttpHeaders headers = new HttpHeaders();
                 headers.setLocation(builder.path("/article/{id}").buildAndExpand(article.getArticleId()).toUri());

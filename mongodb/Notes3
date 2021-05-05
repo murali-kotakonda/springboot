@@ -1,0 +1,57 @@
+momgo db
+
+search:
+{id:34343}
+
+
+Query query = new Query();
+query.with(Sort.by(Sort.Direction.ASC, "age"));
+List<User> users = mongoTemplate.find(query,User.class);
+
+
+Query query = new Query();
+query.with(Sort.by(Sort.Direction.ASC, "age"));
+List<User> users = mongoTemplate.find(query,User.class);
+
+Query query = new Query();
+query.addCriteria(Criteria.where("name").regex("^A"));
+List<User> users = mongoTemplate.find(query,User.class);
+
+Query query = new Query();
+query.addCriteria(Criteria.where("name").regex("c$"));
+List<User> users = mongoTemplate.find(query, User.class);
+
+Query query = new Query();
+query.addCriteria(Criteria.where("age").lt(50).gt(20));
+List<User> users = mongoTemplate.find(query,User.class);
+
+final Pageable pageableRequest = PageRequest.of(0, 2);
+Query query = new Query();
+query.with(pageableRequest);
+
+QUser qUser = new QUser("user");
+Predicate predicate = qUser.name.eq("Eric");
+List<User> users = (List<User>) userRepository.findAll(predicate);
+
+QUser qUser = new QUser("user");
+Predicate predicate = qUser.name.startsWith("A");
+List<User> users = (List<User>) userRepository.findAll(predicate);
+
+
+QUser qUser = new QUser("user");
+Predicate predicate = qUser.name.endsWith("c");
+List<User> users = (List<User>) userRepository.findAll(predicate);
+
+@Query("{ 'name' : ?0 }")
+List<User> findUsersByName(String name);
+
+@Query("{ 'name' : { $regex: ?0 } }")
+List<User> findUsersByRegexpName(String regexp);
+
+
+@Query("{ 'age' : { $gt: ?0, $lt: ?1 } }")
+List<User> findUsersByAgeBetween(int ageGT, int ageLT);
+
+
+@Query(value="{'id' : $0}", delete = true)
+public Person deleteById (String id);

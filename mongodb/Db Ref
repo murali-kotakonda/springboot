@@ -1,0 +1,85 @@
+Using DBRefs
+There are three fields in DBRefs −
+
+$ref − This field specifies the collection of the referenced document
+
+$id − This field specifies the _id field of the referenced document
+
+$db − This is an optional field and contains the name of the database in which the referenced document lies
+
+Consider a sample user document having DBRef field address as shown in the code snippet −
+
+{
+   "_id":ObjectId("53402597d852426020000002"),
+   "address": {
+   "$ref": "address_home",
+   "$id": ObjectId("534009e4d852427820000002"),
+   "$db": "tutorialspoint"},
+   "contact": "987654321",
+   "dob": "01-01-1991",
+   "name": "Tom Benzamin"
+}
+
+
+
+
+>var user = db.users.findOne({"name":"Tom Benzamin"})
+>var dbRef = user.address
+>db[dbRef.$ref].findOne({"_id":(dbRef.$id)})
+
+
+
+
+
+Embedded relation:
+-----------------
+Let us consider the case of storing addresses for users. So, one user can have multiple addresses making this a 1:N relationship.
+
+Following is the sample document structure of user document −
+
+{
+   "_id":ObjectId("52ffc33cd85242f436000001"),
+   "name": "Tom Hanks",
+   "contact": "987654321",
+   "dob": "01-01-1991"
+}
+Following is the sample document structure of address document −
+
+{
+   "_id":ObjectId("52ffc4a5d85242602e000000"),
+   "building": "22 A, Indiana Apt",
+   "pincode": 123456,
+   "city": "Los Angeles",
+   "state": "California"
+} 
+Modeling Embedded Relationships
+In the embedded approach, we will embed the address document inside the user document.
+
+> db.users.insert({
+	{
+		"_id":ObjectId("52ffc33cd85242f436000001"),
+		"contact": "987654321",
+		"dob": "01-01-1991",
+		"name": "Tom Benzamin",
+		"address": [
+			{
+				"building": "22 A, Indiana Apt",
+				"pincode": 123456,
+				"city": "Los Angeles",
+				"state": "California"
+			},
+			{
+				"building": "170 A, Acropolis Apt",
+				"pincode": 456789,
+				"city": "Chicago",
+				"state": "Illinois"
+			}
+		]
+	}
+})
+This approach maintains all the related data in a single document, which makes it easy to retrieve and maintain. The whole document can be retrieved in a single query such as −
+
+>db.users.findOne({"name":"Tom Benzamin"},{"address":1})
+
+
+

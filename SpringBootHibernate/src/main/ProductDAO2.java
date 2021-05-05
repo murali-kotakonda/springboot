@@ -24,8 +24,9 @@ public class ProductDAO2 implements Dao{
 		return (List<Product>) entityManager.createQuery(hql).getResultList();
 	}	
 
-	public void addArticle(Product article) {
-		entityManager.merge(article);
+	public Product addArticle(Product article) {
+		Product product = entityManager.merge(article);
+		return product;
 	}
 
 	public void updateArticle(Product article) {

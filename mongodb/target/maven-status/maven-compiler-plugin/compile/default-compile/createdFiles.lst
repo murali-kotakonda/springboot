@@ -1,0 +1,13 @@
+mongo\relation\CustomerRepository.class
+mongo\relation\Accounts.class
+mongo\relation\Customer.class
+mongo\model\Product.class
+mongo\model\TestApp.class
+mongo\repository\MyProductController.class
+mongo\model\ProductResponse.class
+mongo\repository\ProductRepository.class
+mongo\relation\MyCustomerController.class
+mongo\model\Address.class
+test\ProductRepositoryImpl.class
+mongo\model\DynamicQuery.class
+test\SimpleMongoConfig.class

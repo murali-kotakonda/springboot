@@ -1,0 +1,175 @@
+>show dbs
+
+>use mydb
+
+>db.createCollection("mycollection")
+{ "ok" : 1 }
+
+
+>db.movie.insert({"name":"tutorials point"})
+
+> db.emp.find()
+
+>db.emp.find().pretty()
+>db.emp.findOne()
+>db.emp.find({"id":"2000"}).pretty()
+db.mycol.find({"id":{$lt:50}}).pretty()
+db.mycol.find({"id":{$lte:50}}).pretty()
+db.mycol.find({"id":{$gt:50}}).pretty()
+db.mycol.find({"id":{$gte:50}}).pretty()
+db.mycol.find({"id":{$ne:50}}).pretty()
+db.mycol.find({"name":{$in:["Raj", "Ram", "Raghu"]}}).pretty()
+db.mycol.find({"name":{$nin:["Ramu", "Raghav"]}}).pretty()
+db.mycol.find({$and:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()
+db.mycol.find({$or:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()
+db.empDetails.find( { "Age": { $not: { $gt: "25" } } } )
+
+
+db.mycol.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}})
+
+>db.createCollection("mycollection")
+{ "ok" : 1 }
+
+
+>use mydb
+switched to db mydb
+>show collections
+mycol
+mycollection
+system.indexes
+tutorialspoint
+>
+
+>db.mycollection.drop()
+
+
+MongoDB supports many datatypes. Some of them are −
+
+String − This is the most commonly used datatype to store the data. String in MongoDB must be UTF-8 valid.
+
+Integer − This type is used to store a numerical value. Integer can be 32 bit or 64 bit depending upon your server.
+
+Boolean − This type is used to store a boolean (true/ false) value.
+
+Double − This type is used to store floating point values.
+
+Min/ Max keys − This type is used to compare a value against the lowest and highest BSON elements.
+
+Arrays − This type is used to store arrays or list or multiple values into one key.
+
+Timestamp − ctimestamp. This can be handy for recording when a document has been modified or added.
+
+Object − This datatype is used for embedded documents.
+
+Null − This type is used to store a Null value.
+
+Symbol − This datatype is used identically to a string; however, it's generally reserved for languages that use a specific symbol type.
+
+Date − This datatype is used to store the current date or time in UNIX time format. You can specify your own date time by creating object of Date and passing day, month, year into it.
+
+Object ID − This datatype is used to store the document’s ID.
+
+Binary data − This datatype is used to store binary data.
+
+Code − This datatype is used to store JavaScript code into the document.
+
+Regular expression − This datatype is used to store regular expression.
+
+
+
+> db.emp.insert({
+... _id : ObjectId("507f191e810c19729de860ea"),
+... title: "MongoDB Overview",
+... description: "MongoDB is no sql database",
+... by: "tutorials point",
+... url: "http://www.tutorialspoint.com",
+... tags: ['mongodb', 'database', 'NoSQL'],
+... likes: 100
+... })
+
+
+
+> db.empDetails.insertMany(
+	[
+		{
+			First_Name: "Radhika",
+			Last_Name: "Sharma",
+			Date_Of_Birth: "1995-09-26",
+			e_mail: "radhika_sharma.123@gmail.com",
+			phone: "9000012345"
+		},
+		{
+			First_Name: "Rachel",
+			Last_Name: "Christopher",
+			Date_Of_Birth: "1990-02-16",
+			e_mail: "Rachel_Christopher.123@gmail.com",
+			phone: "9000054321"
+		},
+		{
+			First_Name: "Fathima",
+			Last_Name: "Sheik",
+			Date_Of_Birth: "1990-02-16",
+			e_mail: "Fathima_Sheik.123@gmail.com",
+			phone: "9000054321"
+		}
+	]
+)
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("5dd631f270fb13eec3963bed"),
+		ObjectId("5dd631f270fb13eec3963bee"),
+		ObjectId("5dd631f270fb13eec3963bef")
+	]
+}
+
+
+db.log_events.createIndex( { "createdAt": 1 }, { expireAfterSeconds: 3600 } )
+
+db.log_events.insert( {
+    "createdAt": new Date(), 
+    "logEvent": 2, 
+    "logMessage": "Success!"
+} )
+
+2016-01-24T13:21:55.000
+
+
+
+>db.mycol.remove({'title':'MongoDB Overview'})
+
+> db.mycol.remove({})  -> remove all
+
+
+projection:
+------------------------
+Following example will display the title of the document while querying the document.
+>db.mycol.find({},{"title":1,_id:0})
+
+
+>db.mycol.find({},{"title":1,_id:0}).limit(2)
+
+
+>db.mycol.find({},{"title":1,_id:0}).limit(1).skip(1)
+
+>db.mycol.find({},{"title":1,_id:0}).sort({"title":-1})
+To specify sorting order 1 and -1 are used. 1 is used for ascending order while -1 is used for descending order.
+
+
+>db.mycol.createIndex({"title":1})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+
+
+
+
+
+
+
+
+
+

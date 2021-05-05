@@ -1,6 +1,11 @@
 package util;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+//@Document(collection = "emp")
 public class Product {
+	//@Id
 	private int articleId;
 	private String title;
 	private String category;

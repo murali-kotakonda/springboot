@@ -1,8 +1,8 @@
 Spring Boot:
 -------------
-- spring boot is a flavour on the existing sprimg components.
+- spring boot is a flavour on the existing spring components.
 -> Spring boot is open source
-->Intially  Intended for micro service apps , then cna be used for any spring projects.
+->Initially  Intended for micro service apps , then can be used for any spring projects.
 - Spring Boot uses completely new development model to make Java Development very easy by avoiding some tedious development steps 
 and boilerplate code and configuration.  
 ->using a stand-alone[main method]  we can manage any kind of spring projects.

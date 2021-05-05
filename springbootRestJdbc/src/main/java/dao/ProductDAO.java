@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -33,7 +32,7 @@ public class ProductDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	class ArticleRowMapper implements RowMapper<Product> {
+	/* class ArticleRowMapper implements RowMapper<Product> {
 		@Override
 		public Product mapRow(ResultSet row, int rowNum) throws SQLException {
 			Product article = new Product();
@@ -43,37 +42,49 @@ public class ProductDAO {
 			return article;
 		}
 	} 
+	RowMapper<Product> rowMapper = new ArticleRowMapper();
+	*/
+	
+	RowMapper<Product> rowMapper = new RowMapper<Product>() {
+		@Override
+		public Product mapRow(ResultSet row, int rowNum) throws SQLException {
+			Product article = new Product();
+			article.setArticleId(row.getInt("articleId"));
+			article.setTitle(row.getString("title"));
+			article.setCategory(row.getString("category"));
+			return article;
+		}
+	};
+			
 	public Product getArticleById(int articleId) {
 		String sql = "SELECT articleId, title, category FROM Product WHERE articleId = ?";
-		//RowMapper<Product> rowMapper = new BeanPropertyRowMapper<Product>(Product.class);
-		RowMapper<Product> rowMapper = new ArticleRowMapper();
 		try {
-		Product article = jdbcTemplate.queryForObject(sql, rowMapper, articleId);
-		return article;
+			Product article = jdbcTemplate.queryForObject(sql, rowMapper, articleId);
+			return article;
 		}catch(Exception ex) {
 			throw new ServiceException("invalid Product ID.", "err03");
 		}
 	}
 
+	// RowMapper<Article> rowMapper = new
+			// BeanPropertyRowMapper<Article>(Article.class);
 	public List<Product> getAllArticles() {
 		String sql = "SELECT articleId, title, category FROM Product";
-		// RowMapper<Article> rowMapper = new
-		// BeanPropertyRowMapper<Article>(Article.class);
-		RowMapper<Product> rowMapper = new ArticleRowMapper();
 		return this.jdbcTemplate.query(sql, rowMapper);
 	}
 
-	public void addArticle(Product article) {
+	public void addArticle(Product product) {
 		// Add article
 		String sql = "INSERT INTO Product (articleId, title, category) values (?, ?, ?)";
-		jdbcTemplate.update(sql, article.getArticleId(), article.getTitle(), article.getCategory());
+		jdbcTemplate.update(sql, product.getArticleId(), product.getTitle(), product.getCategory());
 
 		// Fetch article id
 		sql = "SELECT articleId FROM Product WHERE title = ? and category=?";
-		int articleId = jdbcTemplate.queryForObject(sql, Integer.class, article.getTitle(), article.getCategory());
+		int articleId = jdbcTemplate.queryForObject(sql, Integer.class, product.getTitle(), product.getCategory());
 
 		// Set article id
-		article.setArticleId(articleId);
+		product.setArticleId(articleId);
+
 	}
 
 	public void updateProduct(Product article) {

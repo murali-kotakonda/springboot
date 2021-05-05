@@ -30,8 +30,9 @@ public class ProductDAO1 implements Dao{
 		return products;
 	}	
 
-	public void addArticle(Product article) {
-		productRepository.save(article);
+	public Product addArticle(Product article) {
+		Product product = productRepository.save(article);
+		return product;
 	}
 
 	public void updateArticle(Product article) {
