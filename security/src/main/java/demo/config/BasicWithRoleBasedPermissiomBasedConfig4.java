@@ -1,9 +1,6 @@
 package demo.config;
 
-
 import static demo.config.util.ApplicationUserRole.ADMIN;
-import static demo.config.util.ApplicationUserRole.CUSTOMER;
-import static demo.config.util.ApplicationUserRole.AGENT;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -61,21 +58,21 @@ public class BasicWithRoleBasedPermissiomBasedConfig4 extends WebSecurityConfigu
                 .username("user1")
                 .password(passwordEncoder.encode("password123"))
                 //.roles(ADMIN.name()) 
-                .authorities("ROLE_"+ADMIN.name())
+                .authorities("ROLE_"+ADMIN.name()) //add as ROLE_ADMIN
                 .build();
 
         UserDetails user2 = User.builder()
                 .username("user2")
                 .password(passwordEncoder.encode("password123"))
                // .roles(AGENT.name())  
-                .authorities(CATALOG_READ,CATALOG_WRITE)
+                .authorities(CATALOG_READ,CATALOG_WRITE) //add as ROLE_AGENT
                 .build();
 
         UserDetails user3 = User.builder()
                 .username("user3")
                 .password(passwordEncoder.encode("password123"))
                 //.roles(CUSTOMER.name()) 
-                .authorities(CATALOG_READ)
+                .authorities(CATALOG_READ) //add as ROLE_CUSTOMER
                 .build();
 
         return new InMemoryUserDetailsManager(
@@ -83,6 +80,5 @@ public class BasicWithRoleBasedPermissiomBasedConfig4 extends WebSecurityConfigu
                 user2,
                 user3
         );
-
     }
 }
