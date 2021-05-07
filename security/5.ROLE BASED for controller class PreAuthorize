@@ -21,6 +21,7 @@
         System.out.println("deleteStudent");
         System.out.println(studentId);
     }
+    
 
     @PutMapping(path = "{studentId}")
     @PreAuthorize("hasAuthority('student:write')")
