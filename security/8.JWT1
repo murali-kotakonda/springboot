@@ -1,0 +1,13 @@
+Json web token
+
+Adv:
+-> REALLY FAST
+-> stateless ( no db required) , 
+-> used across multiple services (refer diagram jwt1.jpg)
+
+
+DisAdv:
+compromised secret key
+no visibility to loggedin users
+Token can be stolen
+
