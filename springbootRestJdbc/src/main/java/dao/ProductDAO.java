@@ -73,8 +73,8 @@ public class ProductDAO {
 		return this.jdbcTemplate.query(sql, rowMapper);
 	}
 
-	public void addArticle(Product product) {
-		// Add article
+	public void addArticle(Product product){
+		//Add article
 		String sql = "INSERT INTO Product (articleId, title, category) values (?, ?, ?)";
 		jdbcTemplate.update(sql, product.getArticleId(), product.getTitle(), product.getCategory());
 

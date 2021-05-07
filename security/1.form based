@@ -1,0 +1,32 @@
+1.by default there is no security so all apis can be called directly.
+
+
+2.as soon as the dependency tag is added:
+
+   <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-security</artifactId>
+	</dependency>
+
+	the application expects authorization if not the app throws 401 or expects form based authentication 
+	{
+    "timestamp": "2021-05-06T13:13:50.923+0000",
+    "status": 401,
+    "error": "Unauthorized",
+    "message": "Unauthorized",
+    "path": "/api/v1/students/1"
+}
+
+
+for password refer the spring boot console:
+username : user
+Using generated security password: 6548f41f-c138-4468-9120-fc90aba5cb7e
+
+Try http://localhost:8076/api/v1/students/1 in the browser
+
+provide user name and password one time and access all the apis
+login url : http://localhost:8076/login is auto generated
+
+logout url: http://localhost:8076/logout for logout  
+
+refer the network section and the diagram

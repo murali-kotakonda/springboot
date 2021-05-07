@@ -1,0 +1,103 @@
+1.at a time for any api you can add role or authortities but not both.
+ex:
+  IN CONFIG() METHOD
+   http
+                .antMatchers("/api/**").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();  
+                
+    OR
+     http
+                .antMatchers("/api/**").hasAuthority("ROLE_ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic(); 
+ 
+ 2.at a time for any user you can add role or authortities but not both.
+ .Allow /v1/products/** only for Admin:
+ -----------------------------------------------
+		 configure() method:
+		 .antMatchers("/v1/products/**").hasAnyRole("ADMIN") //CODE FOR role based authentication
+		 
+		 
+		 userDetailsService() method:
+		 --------------------------------
+		  UserDetails annaSmithUser = User.builder()
+		                .username("user1")
+		                .password(passwordEncoder.encode("password123"))
+		                .roles("ADMIN") 
+		                .build(); 
+		
+		OR
+		
+		 UserDetails annaSmithUser = User.builder()
+		                .username("user1")
+		                .password(passwordEncoder.encode("password123"))
+		                .authorities("ROLE_ADMIN")
+		                .build();                
+		                
+		                
+/v1/products/** CALLS CAN BE DONE ONLY by user1 for others it throws 403.
+
+
+3.For catalogs modify API call is allowed for "CATALOG_WRITE" 
+
+ configure() method:
+     .antMatchers(HttpMethod.DELETE, "/v1/catalog/**").hasAuthority(CATALOG_WRITE)
+              .antMatchers(HttpMethod.POST, "/v1/catalog/**").hasAuthority(CATALOG_WRITE)
+              .antMatchers(HttpMethod.PUT, "/v1/catalog//**").hasAuthority(CATALOG_WRITE)
+              .antMatchers(HttpMethod.GET,"/v1/catalog/**").hasAuthority(CATALOG_READ)
+              
+              
+  userDetailsService() method:
+  --------------------------------
+		  UserDetails user1 = User.builder()
+                .username("user1")
+                .password(passwordEncoder.encode("password123"))
+                //.roles(ADMIN.name()) 
+                .authorities("ROLE_"+ADMIN.name())
+                .build();
+
+        UserDetails user2 = User.builder()
+                .username("user2")
+                .password(passwordEncoder.encode("password123"))
+               // .roles(AGENT.name())  
+                .authorities(CATALOG_READ,CATALOG_WRITE)
+                .build();
+
+        UserDetails user3 = User.builder()
+                .username("user3")
+                .password(passwordEncoder.encode("password123"))
+                //.roles(CUSTOMER.name()) 
+                .authorities(CATALOG_READ)
+                .build();
+
+        return new InMemoryUserDetailsManager(
+                user1,
+                user2,
+                user3
+        );
+		 
+  
+ user1 cannot access    /v1/catalog/** API calls
+ user2 can access GET,POST,PUT DELETE FOR /v1/catalog/** API calls
+ user3 can access GET /v1/catalog/** API calls
+ 
+ 
+ 3.what is the meaning of:
+ --------------------------------
+   .antMatchers("/v1/catalog/**").hasRole("ADMIN")    -> user with ADMIN Role can access all the APIs for /v1/catalog/** (includes get,post,put,delete)
+   
+   .antMatchers(HttpMethod.GET,"/v1/catalog/**").hasRole("ADMIN")  -> user with ADMIN Role can access to the GET API CALL for /v1/catalog/**
+   
+   so order of the matchers matters.
+   
+   
+    
+    
+ 
+ 
+         	                

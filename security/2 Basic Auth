@@ -1,0 +1,79 @@
+provide user name and password every time you access the apis
+
+provide the a class  that extends WebSecurityConfigurerAdapter for basic auth:
+
+override the configure() method
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+@Configuration
+@EnableWebSecurity
+public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/", "index", "/css/*", "/js/*")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
+    }
+
+}
+
+earlier:
+-------------
+ protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
+    }
+    
+    
+
+The logic
+ http.authorizeRequests()
+        .anyRequest().authenticated()
+        .and()
+        .httpBasic(); tells all requests must be authenticated using HTTP basic authentication method.
+        
+        
+        
+ now:
+ ----------
+  protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/", "index", "/css/*", "/js/*")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
+    }
+    
+username:user
+get the password from console :
+Using generated security password: 1fb8fbeb-1719-4dd7-a8a5-a1fe93efed57
+
+Try http://localhost:8076/api/v1/students/1 in the browser
+no logout is applicable
+
+
+steps:----------
+1.create index.html under resources/static folder
+2.try to access http://localhost:8076 then index.html should be shown as response
+
+
+In HTTP basic authentication, 
+the credentials are weakly encoded using Base64 encoding algorithm which is easily reversible. 
+That means this method is not secured, unless used in conjunction with HTTPS.

@@ -1,0 +1,134 @@
+3. By default spring security has in build memory with
+username:user
+password :random UID
+
+
+EVERY USER TO CONTAIN:
+-------------------------
+username
+password(encoded)
+role
+authorities   -> recommended
+
+
+How to ADD new user to inmemory db:
+-------------------------------------------
+-> override the userDetailsService method  
+  @Override
+    @Bean
+    protected UserDetailsService userDetailsService() {
+        UserDetails annaSmithUser = User.builder()
+                .username("user1")
+                .password(passwordEncoder.encode("password"))
+                .roles("STUDENT") // ROLE_STUDENT
+                .build();
+
+        UserDetails lindaUser = User.builder()
+                .username("user2")
+                .password(passwordEncoder.encode("password123"))
+                .roles("ADMIN") // ROLE_ADMIN
+                .build();
+
+        UserDetails tomUser = User.builder()
+                .username("user3")
+                .password(passwordEncoder.encode("password123"))
+                .roles("AGENT") // ROLE_ADMINTRAINEE
+                .build();
+
+        return new InMemoryUserDetailsManager(
+                annaSmithUser,
+                lindaUser,
+                tomUser
+        );
+
+    }
+}
+
+
+
+-> FOR EVERY USER THERE IS A ROLE
+-> Every Role has permissions or authorities
+-> Permission can be like:
+product:read
+product:write
+catalog:read
+catalog:write
+Every role is configured with set of permissions
+One user can be configured with multiple Roles
+
+if creds which we are using for the basic auth used has the same role as configued with the api ====> the  call is alowed
+if not 403 is thrown
+
+-> 401 : when user name and password is wrong
+-> 403: user name and pass is correct but the user doesnt have persmission
+
+"/product" API can be called only the users  that has "ADMIN" as the role.
+There are two roles in the application:
+1.ADMIN
+2.AGENT
+1.user1 is associated with ADMIN
+2.user2 is associated with AGENT
+1.creds for user1 : user1 , password123
+2.creds for user2 : user2 , password123
+
+
+
+For Role based authnetication:
+-----------------------------------------
+Add the line   
+antMatchers("/api/**").hasRole("STUDENT") SO THAT ONLY USER WITH ROLE 'STUDENT' can able to access the API.
+
+  @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/v1/products/**").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
+    }
+
+ @Override
+  protected UserDetailsService userDetailsService() {
+        UserDetails user1 = User.builder()
+                .username("user1")
+                .password(passwordEncoder.encode("password123"))
+                .roles("ADMIN") 
+                .build();
+
+        return new InMemoryUserDetailsManager(
+                user1
+        );
+
+    }
+                
+                
+   which means only user1 can able to access the /v1/products/** calls.
+   any role based failures leads to 403
+    
+
+
+after the above configuration
+the get call wprks as expected byt the post call failed with 403 even though user, role, and creds are correct.
+this is due to csrf token
+we need to disable this
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable() // TODO:  
+                .authorizeRequests()
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/api/**").hasRole(STUDENT.name())
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
+    }
+    
+    
+ if you disable then we can make the post calls
+   
+    
