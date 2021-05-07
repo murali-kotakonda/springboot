@@ -31,6 +31,7 @@
     
     
     
+    
  Also write @EnableGlobalMethodSecurity(prePostEnabled = true) annotation above the security configuration class to tell springs to consider the 
  annotations at the controller for preauthorize
  
