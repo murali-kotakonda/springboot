@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,12 +30,14 @@ public class CatalogController {
     }
     
     @GetMapping
+    //   @PreAuthorize("hasAuthority('catalog:read')")
  	public ResponseEntity<ResponseInfo<Catalog>> getAllCatalogs() {
  		List<Catalog> list = CATALOGS;
  		return new ResponseEntity(new ResponseInfo<Catalog>("success", list), HttpStatus.OK);
  	}
 
  	@GetMapping(value = "/{id}")
+ 	//@PreAuthorize("hasAuthority('catalog:read')")
  	public ResponseEntity<Catalog> getCatalogById(@PathVariable("id") Integer CatalogId) {
  		Catalog article = CATALOGS.stream()
                 .filter(Catalog -> CatalogId.equals(Catalog.getCatalogId()))
@@ -46,13 +49,15 @@ public class CatalogController {
  	}
  	
  	@DeleteMapping(value = "/{id}")
+ 	@PreAuthorize("hasAuthority('catalog:write')")
  	public ResponseEntity<Void> deleteArticle(@PathVariable("id") Integer CatalogId ) {
  		CATALOGS.removeIf(Catalog -> CatalogId.equals(Catalog.getCatalogId()));
  		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
  	}
  		
  	@PostMapping(consumes = "application/json" ,produces = "application/json")
- 	public ResponseEntity<Void> addArticle(@RequestBody Catalog Catalog, UriComponentsBuilder builder) {
+ 	@PreAuthorize("hasAuthority('catalog:write')")
+ 	public ResponseEntity<Void> addCatalog(@RequestBody Catalog Catalog, UriComponentsBuilder builder) {
  		Integer productId = Catalog.getCatalogId();        
  		boolean exists = CATALOGS.stream()
                          .filter(product -> productId.equals(product.getCatalogId()))
@@ -68,16 +73,17 @@ public class CatalogController {
  	}
  	
  	@PutMapping( produces = "application/json",consumes = "application/json")
- 	public ResponseEntity<Product> updateArticle(@RequestBody Product Catalog) {
- 		Integer productId = Catalog.getProductId();    
+ 	@PreAuthorize("hasAuthority('catalog:write')")
+ 	public ResponseEntity<Catalog> updateCatalog(@RequestBody Catalog Catalog) {
+ 		Integer productId = Catalog.getCatalogId();    
  		Catalog pro = CATALOGS.stream()
                 .filter(product -> productId.equals(product.getCatalogId()))
                 .findFirst()
                 .orElse(null);
         if (pro==null) {
-        	return new ResponseEntity<Product>(HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<Catalog>(HttpStatus.BAD_REQUEST);
         }
-        pro.setCatalogName(Catalog.getProductName());
- 		return new ResponseEntity<Product>(Catalog, HttpStatus.OK);
+        pro.setCatalogName(Catalog.getCatalogName());
+ 		return new ResponseEntity<Catalog>(Catalog, HttpStatus.OK);
  	}
 }

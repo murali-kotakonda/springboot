@@ -1,7 +1,7 @@
 Json web token
 
 Adv:
--> REALLY FAST
+-> FAST
 -> stateless ( no db required) , 
 -> used across multiple services (refer diagram jwt1.jpg)
 
@@ -11,3 +11,239 @@ compromised secret key
 no visibility to loggedin users
 Token can be stolen
 
+steps:
+------------
+1.client provides the credentials to the server
+2.server validates credentials and creates the new token
+3.server will send the new token to the client.
+
+and every token has a expiry
+
+4.client has to send the following header along with every api call:
+name : Authorization
+value: Bearer <token>
+
+
+
+
+What is the JSON Web Token structure?
+In its compact form, JSON Web Tokens consist of three parts separated by dots (.), which are:
+
+Header
+Payload
+Signature
+
+ex:
+xxxxx.yyyyy.zzzzz
+
+Header
+------------------------------------------------------
+The header typically consists of two parts: the type of the token, which is JWT, 
+and the signing algorithm being used, such as HMAC SHA256 or RSA.
+
+For example:
+
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+Then, this JSON is Base64Url encoded to form the first part of the JWT.
+
+
+
+
+
+Payload
+-----------------------------------------------
+The second part of the token is the payload, which contains the claims. 
+Claims are statements about an entity (typically, the user) and additional data.
+There are three types of claims: registered, public, and private claims.
+Registered claims: 
+	These are a set of predefined claims which are not mandatory but recommended, to provide a set of useful, interoperable claims. Some of them are: iss (issuer), exp (expiration time), sub (subject), aud (audience), and others.
+	Notice that the claim names are only three characters long as JWT is meant to be compact.
+Public claims: 
+	These can be defined at will by those using JWTs. But to avoid collisions they should be defined in the IANA JSON Web Token Registry or be defined as a URI that contains a collision resistant namespace.
+Private claims: 
+	These are the custom claims created to share information between parties that agree on using them and are neither registered or public claims.
+
+An example payload could be:
+
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "admin": true
+}
+The payload is then Base64Url encoded to form the second part of the JSON Web Token.
+
+
+
+
+Signature
+-------------------------------------------
+To create the signature part you have to take the encoded header, the encoded payload,
+ a secret, the algorithm specified in the header, and sign that.
+
+For example if you want to use the HMAC SHA256 algorithm, the signature will be created in the following way:
+
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret)
+The signature is used to verify the message wasn't changed along the way, and, in the case of tokens signed with a private key, it can also verify that the sender of the JWT is who it says it is.
+
+
+
+Putting all together
+The output is three Base64-URL strings separated by dots that can be easily passed in HTML and HTTP environments, 
+while being more compact when compared to XML-based standards such as SAML.
+
+
+If the token is sent in the Authorization header, Cross-Origin Resource Sharing (CORS) won't be an issue as it doesn't use cookies.
+
+
+ex:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+
+
+refer github
+ https://github.com/jwtk/jjwt
+ 
+ steps:
+------------------
+
+1.add dependencies
+
+<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.10.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.10.7</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.10.7</version>
+			<scope>runtime</scope>
+		</dependency>
+
+ 
+
+2. Provide a filter class JwtAuthenticationFilter  extends UsernamePasswordAuthenticationFilter
+
+and write two methods:
+
+attemptAuthentication() :  method to validate credentials.
+successfulAuthentication() : method to send token to the client after successfull validation
+
+
+3. register the filter securityconfig 
+
+import static demo.config.util.ApplicationUserRole.ADMIN;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import jwt.JwtAuthenticationFilter;
+
+@Configuration
+@EnableWebSecurity
+public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
+
+    private static final String CATALOG_WRITE = "catalog:write";
+    private static final String CATALOG_READ = "catalog:read";
+	private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public JWTFilter1Config5(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+    	  http
+          .csrf().disable()
+          .sessionManagement()
+              .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+          .and()
+          .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+          .authorizeRequests()
+          .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+          .antMatchers("/product/**").hasRole("admin")
+          .anyRequest()
+          .authenticated();
+    }
+
+    @Override
+    @Bean
+    protected UserDetailsService userDetailsService() {
+        UserDetails user1 = User.builder()
+                .username("user1")
+                .password(passwordEncoder.encode("password123"))
+                //.roles(ADMIN.name()) 
+                .authorities("ROLE_"+ADMIN.name()) //add as ROLE_ADMIN
+                .build();
+
+        UserDetails user2 = User.builder()
+                .username("user2")
+                .password(passwordEncoder.encode("password123"))
+               // .roles(AGENT.name())  
+                .authorities(CATALOG_READ,CATALOG_WRITE) //add as ROLE_AGENT
+                .build();
+
+        UserDetails user3 = User.builder()
+                .username("user3")
+                .password(passwordEncoder.encode("password123"))
+                //.roles(CUSTOMER.name()) 
+                .authorities(CATALOG_READ) //add as ROLE_CUSTOMER
+                .build();
+
+        return new InMemoryUserDetailsManager(
+                user1,
+                user2,
+                user3
+        );
+    }
+}
+    
+4.
+call the API :
+method: POST
+URL:http://localhost:8076/login
+payload:
+
+{
+"username":"user1",
+"password":"password123"
+}
+
+Response will contain the bearer token
+
+5.Finally provide the JWTTokenVerifier.java filter to validate the token
+
+
+
+http://local
+JWT Tokens:
+--------------------
+                tokem expiry           token expiry for browswers
+default value	86400 (1 day)	      	86400 (1 day)
+min value	    300 (5 min)	     		300 (5 min)
+max value	    2592000 (30 days)	    86400 (1 day)*

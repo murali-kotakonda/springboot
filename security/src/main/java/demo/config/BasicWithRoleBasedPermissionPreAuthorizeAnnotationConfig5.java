@@ -15,17 +15,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-
 //@Configuration
 //@EnableWebSecurity
-public class BasicWithRoleBasedPermissiomBasedConfig4 extends WebSecurityConfigurerAdapter {
+//@EnableGlobalMethodSecurity(prePostEnabled = true) used for  controller annotation  @preauthorize
+//Refer 5.ROLE BASED for controller class PreAuthorize
+public class BasicWithRoleBasedPermissionPreAuthorizeAnnotationConfig5 extends WebSecurityConfigurerAdapter {
 
     private static final String CATALOG_WRITE = "catalog:write";
     private static final String CATALOG_READ = "catalog:read";
 	private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public BasicWithRoleBasedPermissiomBasedConfig4(PasswordEncoder passwordEncoder) {
+    public BasicWithRoleBasedPermissionPreAuthorizeAnnotationConfig5(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -35,16 +36,7 @@ public class BasicWithRoleBasedPermissiomBasedConfig4 extends WebSecurityConfigu
          .csrf().disable() 
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-               
-               .antMatchers("/v1/products/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication 
-                
-              .antMatchers(HttpMethod.DELETE, "/v1/catalog/**").hasAuthority(CATALOG_WRITE)
-              .antMatchers(HttpMethod.POST, "/v1/catalog/**").hasAuthority(CATALOG_WRITE)
-              .antMatchers(HttpMethod.PUT, "/v1/catalog//**").hasAuthority(CATALOG_WRITE)
-              .antMatchers(HttpMethod.GET,"/v1/catalog/**").hasAuthority(CATALOG_READ)
-              
-              //.antMatchers(HttpMethod.GET,"/v1/catalog/**").hasAnyRole(ADMIN.name() ,AGENT.name() )
-                
+                .antMatchers("/v1/products/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication 
                 .anyRequest()
                 .authenticated()
                 .and()
