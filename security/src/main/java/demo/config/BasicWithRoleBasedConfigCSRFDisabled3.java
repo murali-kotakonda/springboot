@@ -33,7 +33,7 @@ public class BasicWithRoleBasedConfigCSRFDisabled3 extends WebSecurityConfigurer
          .csrf().disable() 
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication
+                .antMatchers("/v1/product/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication
                 .anyRequest()
                 .authenticated()
                 .and()

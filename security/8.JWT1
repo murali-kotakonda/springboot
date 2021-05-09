@@ -11,6 +11,18 @@ compromised secret key
 no visibility to loggedin users
 Token can be stolen
 
+
+jwt token is generated after successfull authentication.
+JWT IS A AUTHORIZATION
+JWT doesnt contain any secure imfo
+if accidently jwt token is stolen then it can be reused by the others as well. so plz use https or use oauth in future to safeguard jwt
+
+
+can we disable the jwt just like sessions?
+solution):
+No you cannot
+but you can implement a way for  just blacklist the jwt token
+
 steps:
 ------------
 1.client provides the credentials to the server
@@ -222,11 +234,16 @@ public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
         );
     }
 }
+   
+   
+4.1 introduce new end point url only for authenticating the token and generating the token
     
-4.
+4.2
 call the API :
 method: POST
-URL:http://localhost:8076/login
+URL:http://localhost:8076/login  or
+http://localhost:8076/authenticate
+
 payload:
 
 {

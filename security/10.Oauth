@@ -1,0 +1,5 @@
+OAuth:
+---------
+-> Oauth is authorization , not authentication
+-> It is intended for authorization between the services.
+

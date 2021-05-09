@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -37,6 +39,15 @@ public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
     private static final String CATALOG_READ = "catalog:read";
 	private final PasswordEncoder passwordEncoder;
 
+	@Autowired
+	AuthenticationEntryPoint entryPoint;
+	
+	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+	
     @Autowired
     public JWTFilter1Config5(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
@@ -52,8 +63,12 @@ public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
           .addFilter(new JwtAuthenticationFilter(authenticationManager()))
           .addFilterAfter(new JwtTokenVerifier(), JwtAuthenticationFilter.class)
           .authorizeRequests()
-         // .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+          
+          // .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
           //.antMatchers("/product/**").hasRole("admin")
+          
+          .antMatchers("/authenticate").permitAll() //for jwt token generation
+         
           .antMatchers("/v1/products/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication 
           
           .antMatchers(HttpMethod.DELETE, "/v1/catalog/**").hasAuthority(CATALOG_WRITE)
@@ -62,7 +77,10 @@ public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
           .antMatchers(HttpMethod.GET,"/v1/catalog/**").hasAuthority(CATALOG_READ)
          
           .anyRequest()
-          .authenticated();
+          .authenticated()
+          
+          .and().exceptionHandling().authenticationEntryPoint(entryPoint)//optional to use this line ,invoked when token is incorrect
+          ;
     }
 
     @Override

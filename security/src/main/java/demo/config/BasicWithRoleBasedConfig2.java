@@ -32,7 +32,7 @@ public class BasicWithRoleBasedConfig2 extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication
+                .antMatchers("/product/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication
                 .anyRequest()
                 .authenticated()
                 .and()

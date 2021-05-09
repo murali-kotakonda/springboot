@@ -1,0 +1,51 @@
+AuthenticationEntryPoint.java:
+'----------------------------------------------------------------------------------------
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+
+@Component
+public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
+
+	@Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx)
+      throws IOException {
+        response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName());
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid_credentials");
+    }
+	
+	@Override
+    public void afterPropertiesSet() {
+        setRealmName("AuthorizedConsumer");
+        super.afterPropertiesSet();
+    }
+
+} 
+ 
+ securityConfg.java:
+ ---------------------
+ 
+ 
+ @Autowired
+ AuthenticationEntryPoint entryPoint;
+ 
+ 
+ @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable().authorizeRequests()
+        
+        .antMatchers("/authenticate") .permitAll()  -> permit the /authenticate url
+        
+        .anyRequest().authenticated()   -> any url perform jwt authetication
+        
+        .and().exceptionHandling().authenticationEntryPoint(entryPoint)   -> any exception handle using the AuthenticationEntryPoint class
+        
+        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
+    }
