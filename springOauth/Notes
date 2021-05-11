@@ -1,0 +1,7 @@
+for connecting from client to authorization server what is required?
+------------------------------------
+clientId:
+clientSecret: 
+accessTokenUri: 
+userAuthorizationUri: 
+clientAuthenticationScheme

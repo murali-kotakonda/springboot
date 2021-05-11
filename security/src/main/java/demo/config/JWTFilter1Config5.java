@@ -80,6 +80,7 @@ public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
           .authenticated()
           
           .and().exceptionHandling().authenticationEntryPoint(entryPoint)//optional to use this line ,invoked when token is incorrect
+          
           ;
     }
 
