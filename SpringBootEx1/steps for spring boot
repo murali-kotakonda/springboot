@@ -1,14 +1,5 @@
 Steps for creating spring boot application with micro services:
 --------------------------------------------------------------
-
-
-
-
-
-
-
-
-
 1.create a maven project (simple)
 
 2.Under the pom.xml add spring-boot-starter-web dependency as shown below:
@@ -36,13 +27,11 @@ Steps for creating spring boot application with micro services:
           
 3. Update the project using maven option.
 
-
 4. create "application.properties" file under the project.
 application.properties should have below content
 
 server.port=8078
 server.contextPath=/myapp
-
 
 5.create package "rest"
 6.under rest package create  "EmpController.java"
@@ -68,7 +57,6 @@ public class EmpController {
 		return "Hello Spring Boot"; //returns text
 	}
 
-  
   
 }
 
