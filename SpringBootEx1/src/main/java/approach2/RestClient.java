@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import rest1.product.Product;
+import rest.product.provider.Product;
 
 public class RestClient {
  /*

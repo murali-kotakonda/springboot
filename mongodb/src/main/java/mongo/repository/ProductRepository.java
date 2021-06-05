@@ -17,7 +17,6 @@ Product findProductsByArticleId(int articleId);
 @Query(value="{'articleId' : ?0}", delete = true)
 public Long deleteByArticleId (int articleId);
 
-
 public List<Product> findByCategory(String category);
 
 }

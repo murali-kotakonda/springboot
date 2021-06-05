@@ -1,0 +1,81 @@
+Steps for creating spring boot application with micro services:
+--------------------------------------------------------------
+1.create a maven project (simple)
+
+2.Under the pom.xml add spring-boot-starter-web dependency as shown below:
+  <parent>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-parent</artifactId>
+	    <version>2.2.6.RELEASE</version>
+	 </parent>
+        <dependencies>
+              <dependency>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-starter-web</artifactId>
+              </dependency>
+              
+               <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+        
+        </dependencies>
+
+          <properties>
+           <java.version>1.8</java.version>
+          </properties> 
+          
+3. Update the project using maven option.
+
+4. create "application.properties" file under the project.
+application.properties should have below content
+
+server.port=8078
+server.contextPath=/myapp
+
+5.create package "rest"
+6.under rest package create  "EmpController.java"
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class EmpController {
+
+	@RequestMapping("/hello")
+	public String getHello() {
+		return "Welcome to Spring Boot";//returns text
+	}
+
+	@RequestMapping("/hi")
+	public String myData() {
+		return "Hello Spring Boot"; //returns text
+	}
+
+  
+}
+
+
+7.create SpringBootApplication class
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@ComponentScan(basePackages ={"rest"})
+public class TestApp {
+	public static void main(String[] args) {
+		SpringApplication.run(TestApp.class, args);
+	}
+}
+
+1.run the mail method
+2.java -jar demo.jar  --server.port=2345
+  
+ 

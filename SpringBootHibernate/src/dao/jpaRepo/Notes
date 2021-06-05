@@ -1,0 +1,139 @@
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods
+
+
+-  If you want to expose CRUD methods for that domain type, extend CrudRepository
+-------------------------------------------------------------------------------------------
+interface UserRepository extends CrudRepository<User, Long> {
+
+  long countByLastname(String lastname);
+}
+
+interface UserRepository extends CrudRepository<User, Long> {
+
+  long deleteByLastname(String lastname);
+
+  List<User> removeByLastname(String lastname);
+}
+
+
+
+- // how to selectively expose CRUD methods (findById and save, in this case):
+----------------------------------------------------------------------------------------------
+@NoRepositoryBean
+interface MyBaseRepository<T, ID> extends Repository<T, ID> {
+
+  Optional<T> findById(ID id);
+
+  <S extends T> S save(S entity);
+}
+
+interface UserRepository extends MyBaseRepository<User, Long> {
+  User findByEmailAddress(String emailAddress);
+}
+
+
+class User{
+	public static void main(String[] args) {
+		UserRepository s =null;
+	}
+	
+} 
+
+
+
+
+
+
+
+
+query methods:
+-------------------
+Derived queries with the predicates IsStartingWith, StartingWith, StartsWith, 
+IsEndingWith, EndingWith, EndsWith, IsNotContaining,
+ NotContaining, NotContains, IsContaining, Containing, 
+ Contains the respective arguments for these queries will get sanitized. 
+
+
+interface PersonRepository extends Repository<Person, Long> {
+
+  List<Person> findByEmailAddressAndLastname(EmailAddress emailAddress, String lastname);
+
+  // Enables the distinct flag for the query
+  List<Person> findDistinctPeopleByLastnameOrFirstname(String lastname, String firstname);
+  List<Person> findPeopleDistinctByLastnameOrFirstname(String lastname, String firstname);
+
+  // Enabling ignoring case for an individual property
+  List<Person> findByLastnameIgnoreCase(String lastname);
+  // Enabling ignoring case for all suitable properties
+  List<Person> findByLastnameAndFirstnameAllIgnoreCase(String lastname, String firstname);
+
+  // Enabling static ORDER BY for a query
+  List<Person> findByLastnameOrderByFirstnameAsc(String lastname);
+  List<Person> findByLastnameOrderByFirstnameDesc(String lastname);
+}
+
+
+custom query:
+------------------
+
+DEFAULT (case-sensitive)  
+firstname = ?0
+
+DEFAULT (case-insensitive)
+LOWER(firstname) = LOWER(?0)
+
+EXACT (case-sensitive)
+firstname = ?0
+
+EXACT (case-insensitive)
+LOWER(firstname) = LOWER(?0)
+
+STARTING (case-sensitive)
+firstname like ?0 + '%'
+
+STARTING (case-insensitive)
+LOWER(firstname) like LOWER(?0) + '%'
+
+ENDING (case-sensitive)
+firstname like '%' + ?0
+
+ENDING (case-insensitive)
+LOWER(firstname) like '%' + LOWER(?0)
+
+CONTAINING (case-sensitive)
+firstname like '%' + ?0 + '%'
+
+CONTAINING (case-insensitive)
+LOWER(firstname) like '%' + LOWER(?0) + '%'
+
+
+
+
+
+
+
+auditing:
+---------------
+
+class Customer {
+
+  private AuditMetadata auditingMetadata;
+
+  // … further properties omitted
+}
+
+class AuditMetadata {
+
+  @CreatedBy
+  private User user;
+
+  @CreatedDate
+  private Instant createdDate;
+  
+  
+  
+
+}
+
+
+

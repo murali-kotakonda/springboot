@@ -1,0 +1,19 @@
+The @SpringBootApplicationannotation does the magic work to start the embedded Tomcat server, configure Spring Dispatcher Servlet, etc.
+And there are two default directories 
+and one properties file in the src/main/resources folder.
+
+1.static: put your static files here, e.g. HTML files.
+2.templates: put your template files here, e.g. ThymeLeaf files.
+3.application.properties: specify additional configurations here, e.g. logging, Spring MVC view resolver, server port number, etc.
+
+
+1.try http://localhost:8078/ then "index.html" will open under static
+
+
+2.
+We will create JSP page with JSTL to display the contact list, so add the following two dependencies in the pom.xml file:
+The dependency tomcat-embed-jasper is JSP Engine for Tomcat. It is required to enable JSP with Spring Boot.
+
+
+3. If you need ThymeLeaf:
+remove the dependencies tomcat-embed-jasper and jstl as we can’t use both JSP and ThymeLeaf.

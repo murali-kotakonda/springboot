@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import service.ProductService;
+import service.ServiceException;
+
 @Controller
 public class ProductController {
 	@Autowired

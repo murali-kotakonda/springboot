@@ -8,9 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class WebController {
 
-	@GetMapping("/hello1")
+	@RequestMapping(value="/hello1" , method= RequestMethod.GET )
 	public String t1() {
-			return "index";
+			return "test";
 	}
 	
 	@GetMapping("/hello2")
