@@ -17,23 +17,23 @@ public class ProductDAO2 implements Dao{
 	@PersistenceContext	
 	private EntityManager entityManager;	
 	
-	public Product getArticleById(int articleId) {
+	public Product getProductById(int articleId) {
 		return entityManager.find(Product.class, articleId);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Product> getAllArticles() {
+	public List<Product> getAllProducts() {
 		String hql = "FROM Product as atcl ORDER BY atcl.articleId";
 		return (List<Product>) entityManager.createQuery(hql).getResultList();
 	}	
 
-	public Product addArticle(Product article) {
+	public Product addProduct(Product article) {
 		Product product = entityManager.merge(article);
 		return product;
 	}
 
-	public void updateArticle(Product article) {
-		Product artcl = getArticleById(article.getArticleId());
+	public void updateProduct(Product article) {
+		Product artcl = getProductById(article.getArticleId());
 		if(artcl==null) {
 			throw new ServiceException("Invalid product id","");
 		}
@@ -42,18 +42,20 @@ public class ProductDAO2 implements Dao{
 		entityManager.flush();
 	}
 
-	public void deleteArticle(int articleId) {
-		Product artcl = getArticleById(articleId);
+	public boolean deleteArticle(int articleId) {
+		Product artcl = getProductById(articleId);
 		if(artcl==null) {
 			throw new ServiceException("Invalid product id","");
 		}
-		entityManager.remove(getArticleById(articleId));
+		entityManager.remove(getProductById(articleId));
+		return true;
 	}
 
-	public boolean articleExists(String title, String category) {
+	public boolean productExists(String title, String category) {
 		String hql = "FROM Product as atcl WHERE atcl.title = :title and atcl.category = :category";
 		int count = entityManager.createQuery(hql).setParameter("title", title)
 		              .setParameter("category", category).getResultList().size();
 		return count > 0 ? true : false;
 	}
+
 }

@@ -27,7 +27,7 @@ import util.ServiceException;
  */
 @Transactional
 @Repository
-public class ProductDAO {
+public class ProductDAO implements Dao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -56,7 +56,7 @@ public class ProductDAO {
 		}
 	};
 			
-	public Product getArticleById(int articleId) {
+	public Product getProductById(int articleId) {
 		String sql = "SELECT articleId, title, category FROM Product WHERE articleId = ?";
 		try {
 			Product article = jdbcTemplate.queryForObject(sql, rowMapper, articleId);
@@ -68,12 +68,12 @@ public class ProductDAO {
 
 	// RowMapper<Article> rowMapper = new
 			// BeanPropertyRowMapper<Article>(Article.class);
-	public List<Product> getAllArticles() {
+	public List<Product> getAllProducts() {
 		String sql = "SELECT articleId, title, category FROM Product";
 		return this.jdbcTemplate.query(sql, rowMapper);
 	}
 
-	public void addArticle(Product product){
+	public Product addProduct(Product product){
 		//Add article
 		String sql = "INSERT INTO Product (articleId, title, category) values (?, ?, ?)";
 		jdbcTemplate.update(sql, product.getArticleId(), product.getTitle(), product.getCategory());
@@ -84,7 +84,7 @@ public class ProductDAO {
 
 		// Set article id
 		product.setArticleId(articleId);
-
+		return product;
 	}
 
 	public void updateProduct(Product article) {
@@ -106,5 +106,11 @@ public class ProductDAO {
 			return true;
 		}
 	}
-	
+
+	@Override
+	public void deleteArticle(int articleId) {
+		// TODO Auto-generated method stub
+		
+	}
+	 
 }

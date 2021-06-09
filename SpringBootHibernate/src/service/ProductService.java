@@ -10,23 +10,23 @@ import dao.Dao;
 import main.Product;
 @Service(value = "pService")
 public class ProductService {
-	@Autowired
+	//@Autowired
 	@Qualifier("dao3")
 	private Dao dao;
 	
 	public Product getArticleById(int articleId) {
-		Product obj = dao.getArticleById(articleId);
+		Product obj = dao.getProductById(articleId);
 		return obj;
 	}	
 	public List<Product> getAllArticles(){
-		return dao.getAllArticles();
+		return dao.getAllProducts();
 	}
 
 	public  boolean addArticle(Product article){
-        if (dao.articleExists(article.getTitle(), article.getCategory())) {
+        if (dao.productExists(article.getTitle(), article.getCategory())) {
     	   return false;
        } else {
-    	   dao.addArticle(article);
+    	   dao.addProduct(article);
     	   return true;
        } 
 		//dao.addArticle(article);
@@ -34,7 +34,7 @@ public class ProductService {
 	}
 
 	public void updateArticle(Product article) {
-		dao.updateArticle(article);
+		dao.updateProduct(article);
 	}
 
 	public void deleteArticle(int articleId) {

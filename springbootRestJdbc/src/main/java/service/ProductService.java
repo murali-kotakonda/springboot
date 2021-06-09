@@ -14,19 +14,19 @@ public class ProductService {
 	private ProductDAO articleDAO;
 
 	public Product getArticleById(int articleId) {
-		Product obj = articleDAO.getArticleById(articleId);
+		Product obj = articleDAO.getProductById(articleId);
 		return obj;
 	}
 
 	public List<Product> getAllArticles() {
-		return articleDAO.getAllArticles();
+		return articleDAO.getAllProducts();
 	}
 
 	public synchronized boolean addArticle(Product article) {
 		if (articleDAO.productExists(article.getTitle(), article.getCategory())) {
 			return false;
 		} else {
-			articleDAO.addArticle(article);
+			articleDAO.addProduct(article);
 			return true;
 		}
 	}

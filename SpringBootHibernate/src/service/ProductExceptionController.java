@@ -14,10 +14,11 @@ public class ProductExceptionController {
       return new ResponseEntity<>(new ProductResponse(exception.getCode(), exception.getMsg()), HttpStatus.NOT_FOUND);
    }
    
-   @ExceptionHandler({Exception.class})
-   public ResponseEntity<Object> exception1(ServiceException exception) {
-      return new ResponseEntity<>("Server Exception...", HttpStatus.SERVICE_UNAVAILABLE);
-   }
+	/*
+	 * @ExceptionHandler({Exception.class}) public ResponseEntity<Object>
+	 * exception1(ServiceException exception) { return new
+	 * ResponseEntity<>("Server Exception...", HttpStatus.SERVICE_UNAVAILABLE); }
+	 */
 }
 
 class ProductResponse{

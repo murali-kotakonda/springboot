@@ -1,0 +1,286 @@
+{
+	"info": {
+		"_postman_id": "a46e3025-05ca-430f-bc87-02add839ac26",
+		"name": "Product",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Products",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8079/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8079",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products gateway",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8075/order/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8075",
+					"path": [
+						"order",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8076/order/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8076",
+					"path": [
+						"order",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order gateway",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8075/order/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8075",
+					"path": [
+						"order",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products jpa rest",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8079/myproduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8079",
+					"path": [
+						"myproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products jpa rest metadata",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8079/profile/myproduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8079",
+					"path": [
+						"profile",
+						"myproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products jpa rest findby",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8079/myproduct/search/findByCategory?category=testcat3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8079",
+					"path": [
+						"myproduct",
+						"search",
+						"findByCategory"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "testcat3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by Id",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8079/product/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8079",
+					"path": [
+						"product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete By Id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8079/product/1200",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8079",
+					"path": [
+						"product",
+						"1200"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"articleId\": 5121211,\r\n        \"title\": \"sfsfsfsfsf\",\r\n        \"category\": \"mobilesfssfsfs\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8079/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8079",
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"articleId\":5,\r\n        \"title\": \"dsgsfsfsfsfg\",\r\n        \"category\": \"mobizsfsfles\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8079/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8079",
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

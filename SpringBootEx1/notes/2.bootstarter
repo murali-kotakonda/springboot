@@ -4,10 +4,38 @@ boot starter:
 - to be specified as dependeny in pom.xml (maven)
 - its a collective jar files for the coponent we need to import.
 - spring boot provides different  boot starters based on type of component we need .
+Handling dependency management is a difficult task for big projects. 
+Spring Boot resolves this problem by providing a set of dependencies for  developers convenience.
+
 
 adv:
+------------------------------------
 handling dependency management is simplied for bigger projects.
 no need to write multiple dependency tag in pom.xml
+ensures all the versions of springs are compatible to each other.
+
+
+
+spring boot parents take care of versions of all the spring dependencies
+all versions are inherited from starter parent
+
+spring boot mavn plugin:
+-----------------------------
+- helps us to create the jar/war and run our spring boot app.
+
+
+Spring boot starter parent defines:
+------------------------------
+Dependency versioning
+Plugins
+Java version
+
+Can we override the  version  for any dependency managed by Spring boot starter parent ?
+---------------------------------------------------------------------------------------------------
+Yes
+change the <properties> tag and provide the dependency property name and version.
+ex: 1.8 
+
 
 ex for boot starters:
 ------------------------
@@ -52,9 +80,8 @@ starter used for Spring Security like JWT, OAUTH , basic auth, form based auth  
 </dependency>
 
 
-Handling dependency management is a difficult task for big projects. 
-Spring Boot resolves this problem by providing a set of dependencies for  developers convenience.
 Boot starters:[to handle the all dependencies/jars ] - no need to write multiple <dependency> tag in pom.xml
+
 Based on the component we are developing in our project we need to include the boot starter in pom.xml
 •	spring-boot-starter: – This is the core starter and includes logging, auto-configuration support, and YAML.
 •	spring-boot-starter-jdbc – This starter is used for HikariCP connection pool with JDBC

@@ -7,7 +7,71 @@ Spring Boot Application
 Spring Boot automatically configures your application based on the dependencies 
 you have added to the project by using @EnableAutoConfiguration annotation.
 
+@ComponentScan
+------------------------------------
+By default spring scans only the current package
+if we have additional bean class in diff packages then we need  to this this annotation.
+
+
+Spring Boot autoconfiguration:
+--------------------------------------------
+To enable auto-configuration, we can use one of the @SpringBootApplication or @EnableAutoConfiguration annotations:
+
 registers beans based on both the included jar files in the classpath and the beans defined by us
+
+the Spring Boot autoconfiguration represents a way to automatically configure a Spring application 
+based on the dependencies that are present on the classpath.
+
+All auto-configuration logic is implemented in spring-boot-autoconfigure.jar, as shown in the following figure.
+
+ex:
+1. if the H2 database Jar is present in the classpath and we have not configured any beans related to the database manually, the Spring Boot's auto-configuration feature automatically configures it in the project.
+2.Spring-based application requires a lot of configuration.
+ When we use Spring MVC, we need to configure dispatcher servlet, view resolver, web jars 
+ among other things
+3.when we use Hibernate/ JPA, we need to configure datasource, a transaction manager, an entity manager factory among a host of other things.
+
+Observe the console:
+------------------------
+We see that TransactionManagement, DispatcherServlet, EntityManagerFactory, and DataSource automatically configures,
+
+observer Positive match  and negative match
+
+
+
+
+To create a custom auto-configuration, we need to create a class annotated as @Configuration and register it.
+
+Advanced autocinfiguration:
+-----------------------------
+If we want our auto-configuration class to have priority over other auto-configuration candidates, 
+we can add the @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE) annotation.
+
+
+If we want to include a bean only if a specified bean is present or not, we can use the @ConditionalOnBean and @ConditionalOnMissingBean annotations.
+
+Let's also configure a transactionManager bean that will only be loaded if a bean of type JpaTransactionManager is not already defined:
+
+@Bean
+@ConditionalOnMissingBean(type = "JpaTransactionManager")
+JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    JpaTransactionManager transactionManager = new JpaTransactionManager();
+    transactionManager.setEntityManagerFactory(entityManagerFactory);
+    return transactionManager;
+}
+
+
+Disabling Auto-Configuration Classes
+----------------------------------------------------------------
+If we wanted to exclude the auto-configuration from being loaded, we could add the @EnableAutoConfiguration annotation with exclude or excludeName attribute to a configuration class:
+
+@Configuration
+@EnableAutoConfiguration(
+  exclude={MySQLAutoconfiguration.class})
+public class AutoconfigurationApplication {
+
+
+
 
 
 
@@ -84,7 +148,6 @@ public class DemoApplication  extends SpringBootServletInitializer {
       SpringApplication.run(DemoApplication.class, args);
    }
 }
-
 
 
 

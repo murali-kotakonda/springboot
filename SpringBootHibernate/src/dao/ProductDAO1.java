@@ -44,8 +44,9 @@ public class ProductDAO1 implements Dao{
 		productRepository.save(artcl);
 	}
 
-	public void deleteArticle(int articleId) {
+	public boolean deleteArticle(int articleId) {
 		productRepository.deleteById(articleId);
+		return true;
 	}
 
 	public boolean articleExists(String title, String category) {
