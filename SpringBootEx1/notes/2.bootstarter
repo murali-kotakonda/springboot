@@ -1,19 +1,16 @@
-
 boot starter:
 ------------------
-- to be specified as dependeny in pom.xml (maven)
-- its a collective jar files for the coponent we need to import.
-- spring boot provides different  boot starters based on type of component we need .
 Handling dependency management is a difficult task for big projects. 
 Spring Boot resolves this problem by providing a set of dependencies for  developers convenience.
-
+- to be specified as dependency in pom.xml (maven)
+- its a collective jar files for the component we need to import.
+- spring boot provides different  boot starters based on type of component we need .
 
 adv:
 ------------------------------------
-handling dependency management is simplied for bigger projects.
+handling dependency management is simplified for bigger projects.
 no need to write multiple dependency tag in pom.xml
 ensures all the versions of springs are compatible to each other.
-
 
 
 spring boot parents take care of versions of all the spring dependencies
@@ -22,7 +19,6 @@ all versions are inherited from starter parent
 spring boot mavn plugin:
 -----------------------------
 - helps us to create the jar/war and run our spring boot app.
-
 
 Spring boot starter parent defines:
 ------------------------------

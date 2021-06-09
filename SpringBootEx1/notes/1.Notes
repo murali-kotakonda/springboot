@@ -23,7 +23,6 @@ Audience:
 Java
 Springs + MVC + Hibernate + DAO + Maven + web services.
 
- 
 features:
 ------------
 - spring_boot_starter
