@@ -1,4 +1,4 @@
-package app.dao.jpaRepo;
+package app.daoJpa;
 
 import java.util.List;
 

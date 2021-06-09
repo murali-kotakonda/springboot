@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.dao.ProductDAO2;
+import app.daoJpa.ProductDAO3;
 import app.util.Product;
 
 @Service
 public class ProductService {
 	
 	@Autowired
-	private ProductDAO2 articleDAO;
+	private ProductDAO3 articleDAO;
 
 	public Product getArticleById(int articleId) {
 		Product obj = articleDAO.getProductById(articleId);

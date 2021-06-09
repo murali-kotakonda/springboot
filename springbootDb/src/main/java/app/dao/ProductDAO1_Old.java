@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import app.dao.jpaRepo.ProductCrudRepository;
+import app.daoJpa.ProductCrudRepository;
 import app.util.Product;
 
 @Transactional

@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import app.dao.jpaRepo.ProductCrudRepository;
+import app.daoJpa.ProductCrudRepository;
 import app.util.Product;
 
 
