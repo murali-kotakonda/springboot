@@ -8,7 +8,6 @@ user1 cannot access    /v1/catalog/** API calls
  
  
  
- 
 
 1.at a time for any api you can add role or authortities but not both.
 ex:

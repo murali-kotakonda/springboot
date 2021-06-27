@@ -1,8 +1,0 @@
-How to enable logging?
-logging.level.org.springframework: DEBUG
-
-
-How does spring deal when bean is not found?
-if the bean is not found then NoSuchBeanDefinitionException is thrown  
-and stops the app to start
-

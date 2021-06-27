@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
   
 <jsp:include page="menu.jsp"/> <br/>
- <h2>Show All Products</h2>
+
+<h2>Show All Products</h2>
 <table border="2" width="70%" cellpadding="2">  
 <tr>
 <th>ArticleId</th>

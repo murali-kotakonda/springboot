@@ -24,14 +24,16 @@ public class IntegrationService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		return restTemplate.exchange("http://localhost:8079/products", HttpMethod.GET, entity, String.class).getBody();
+		return restTemplate.exchange("http://localhost:8079/products", 
+				HttpMethod.GET, entity, String.class).getBody();
 	}
 	
 	public String getProductById(String id) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8079/product/"+id, HttpMethod.GET, entity, String.class);
+		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8079/product/"+id, 
+				HttpMethod.GET, entity, String.class);
 		HttpStatus statusCode = response.getStatusCode();
 		if(statusCode == HttpStatus.OK) {
 			return response.getBody();
@@ -43,7 +45,8 @@ public class IntegrationService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<Product> entity = new HttpEntity<Product>(product, headers);
-		return restTemplate.exchange("http://localhost:8079/products", HttpMethod.POST, entity, String.class).getBody();
+		return restTemplate.exchange("http://localhost:8079/products", HttpMethod.POST, entity, String.class)
+				.getBody();
 	}
 
 	public String updateProduct(String id, Product product) {
@@ -59,7 +62,8 @@ public class IntegrationService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<Product> entity = new HttpEntity<Product>(headers);
-		return restTemplate.exchange("http://localhost:8079/products/" + id, HttpMethod.DELETE, entity, String.class)
+		return restTemplate.exchange("http://localhost:8079/products/" + id,
+				HttpMethod.DELETE, entity, String.class)
 				.getBody();
 	}
 }

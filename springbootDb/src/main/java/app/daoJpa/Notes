@@ -1,3 +1,24 @@
+JPA:
+-----------
+
+1.Create a interface that implements CRUDRepository or JPARepository
+
+2.Inject the interface to the service class
+
+
+Hibernate  -->SessionFactory
+JDBC       --> Connection
+JdbcTemplate --> JdbcTemplate Obj
+JPA           --> EntityManager or Repository instance
+
+
+3.Write the annotation @EnableJpaRepositories(basePackages = {"dao"}) in the main class
+
+4.Write the JPA annotations for the model class.
+
+5. Write annotation  @EntityScan(basePackages = {"model"} in the main class
+
+
 https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods
 
 
