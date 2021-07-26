@@ -11,12 +11,18 @@ compromised secret key
 no visibility to loggedin users
 Token can be stolen
 
+Steps:
+--------------
+1. get token   [authentication]
+2.use the token for calling the APIs [authorization]
 
-jwt token is generated after successfull authentication.
+
 JWT IS A AUTHORIZATION
-JWT doesnt contain any secure imfo
-if accidently jwt token is stolen then it can be reused by the others as well. so plz use https or use oauth in future to safeguard jwt
+jwt token is generated after successfull authentication.
+JWT doesnt contain any secure info
 
+if accidently jwt token is stolen then it can be reused by the others as well.
+so plz use https or use oauth in future to safeguard jwt
 
 can we disable the jwt just like sessions?
 solution):
@@ -35,11 +41,9 @@ and every token has a expiry
 name : Authorization
 value: Bearer <token>
 
-
-
-
 What is the JSON Web Token structure?
-In its compact form, JSON Web Tokens consist of three parts separated by dots (.), which are:
+In its compact form, 
+JSON Web Tokens consist of three parts separated by dots (.), which are:
 
 Header
 Payload
@@ -50,8 +54,9 @@ xxxxx.yyyyy.zzzzz
 
 Header
 ------------------------------------------------------
-The header typically consists of two parts: the type of the token, which is JWT, 
-and the signing algorithm being used, such as HMAC SHA256 or RSA.
+The header typically consists of two parts: 
+- the type of the token, which is JWT, 
+- the signing algorithm being used, such as HMAC SHA256 or RSA.
 
 For example:
 
@@ -68,6 +73,7 @@ Then, this JSON is Base64Url encoded to form the first part of the JWT.
 Payload
 -----------------------------------------------
 The second part of the token is the payload, which contains the claims. 
+
 Claims are statements about an entity (typically, the user) and additional data.
 There are three types of claims: registered, public, and private claims.
 Registered claims: 
@@ -95,7 +101,9 @@ Signature
 To create the signature part you have to take the encoded header, the encoded payload,
  a secret, the algorithm specified in the header, and sign that.
 
-For example if you want to use the HMAC SHA256 algorithm, the signature will be created in the following way:
+For example :
+if you want to use the HMAC SHA256 algorithm,
+ the signature will be created in the following way:
 
 HMACSHA256(
   base64UrlEncode(header) + "." +
@@ -123,7 +131,6 @@ refer github
  
  steps:
 ------------------
-
 1.add dependencies
 
 <dependency>
@@ -244,6 +251,17 @@ method: POST
 URL:http://localhost:8076/login  or
 http://localhost:8076/authenticate
 
+1. Provide a API that generates the JWT Token
+http method: POST 
+url : /authenticate
+requestBody :
+{
+    "username":"user1",
+    "password":"password123"
+}
+response: string contains the jwt token
+
+
 payload:
 
 {
@@ -254,7 +272,6 @@ payload:
 Response will contain the bearer token
 
 5.Finally provide the JWTTokenVerifier.java filter to validate the token
-
 
 
 http://local

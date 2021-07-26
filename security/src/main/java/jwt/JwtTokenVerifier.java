@@ -36,6 +36,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
         String authorizationHeader = request.getHeader("Authorization");
 
+        String path = request.getPathInfo();
         if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith("Bearer")) {
             filterChain.doFilter(request, response);
             return;
@@ -55,6 +56,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
             List<Map<String, String>> authorities = (List<Map<String, String>>) body.get("authorities");
 
+            //convert the authorities to Set of SimpleGrantedAuthority objects.
             Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
                     .map(m -> new SimpleGrantedAuthority(m.get("authority")))
                     .collect(Collectors.toSet());

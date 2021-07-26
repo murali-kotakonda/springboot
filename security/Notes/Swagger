@@ -1,0 +1,81 @@
+Swagger is an open source project used to generate the REST API documents for RESTful web services.
+
+
+
+steps to enable swagger:
+--------------------------
+1.add the jar files for swagger:
+
+     <dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.8.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.8.0</version>
+			<scope>compile</scope>
+		</dependency>
+2.Register the controllers to swagger
+
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    @Bean
+    public Docket productApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()                 .apis(RequestHandlerSelectors.basePackage("<packge name>"))
+                .paths(regex("/product.*"))
+                .build();
+
+    }
+}
+
+
+import static springfox.documentation.builders.PathSelectors.regex;
+ the @EnableSwagger2 annotation enables Swagger support in the class
+ The select() method called on the Docket bean instance returns an ApiSelectorBuilder, which provides the apis() and paths() methods that are used to filter the controllers and methods
+paths() is a filter to generate documentation only for the path starting with /product
+basePackage  matches the  base package to filter the API
+
+
+Spring Boot Starter 2.2.5
+Swagger 2.7.0
+
+
+Spring Boot Starter 2.5.0
+Swagger 3.0.0
+
+http://localhost:8076/v2/api-docs
+
+http://localhost:8076/swagger-ui.html
+
+http://localhost:8076/swagger-ui/
+
+Annotations:
+------------------------
+
+1. 
+Add @ApiOperation annotation for every API.
+Add @ApiResponses for every API for defining the response codes
+
+ex:
+Add @ApiOperation(value = "View a list of available products", response = Iterable.class)
+
+@ApiOperation(value = "View a list of available products", response = Iterable.class)
+@ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successfully retrieved list"),
+        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+}
+)
+@RequestMapping(value = "/list", method= RequestMethod.GET, produces = "application/json")
+public Iterable list(Model model){
+    Iterable productList = productService.listAllProducts();
+    return productList;
+}
+
+

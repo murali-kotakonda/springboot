@@ -1,4 +1,4 @@
-package demo.student;
+package controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import demo.model.Catalog;
+import demo.model.ResponseInfo;
 
 @RestController
 @RequestMapping("v1/catalog")
@@ -49,14 +52,14 @@ public class CatalogController {
  	}
  	
  	@DeleteMapping(value = "/{id}")
- 	@PreAuthorize("hasAuthority('catalog:write')")
+ 	//@PreAuthorize("hasAuthority('catalog:write')")
  	public ResponseEntity<Void> deleteArticle(@PathVariable("id") Integer CatalogId ) {
  		CATALOGS.removeIf(Catalog -> CatalogId.equals(Catalog.getCatalogId()));
  		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
  	}
  		
  	@PostMapping(consumes = "application/json" ,produces = "application/json")
- 	@PreAuthorize("hasAuthority('catalog:write')")
+ 	//@PreAuthorize("hasAuthority('catalog:write')")
  	public ResponseEntity<Void> addCatalog(@RequestBody Catalog Catalog, UriComponentsBuilder builder) {
  		Integer productId = Catalog.getCatalogId();        
  		boolean exists = CATALOGS.stream()
@@ -73,7 +76,7 @@ public class CatalogController {
  	}
  	
  	@PutMapping( produces = "application/json",consumes = "application/json")
- 	@PreAuthorize("hasAuthority('catalog:write')")
+ 	//@PreAuthorize("hasAuthority('catalog:write')")
  	public ResponseEntity<Catalog> updateCatalog(@RequestBody Catalog Catalog) {
  		Integer productId = Catalog.getCatalogId();    
  		Catalog pro = CATALOGS.stream()

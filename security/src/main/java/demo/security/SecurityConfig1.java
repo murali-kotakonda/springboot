@@ -1,11 +1,11 @@
-package demo.config;
+package demo.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
  
-@Configuration
+//@Configuration
 public class SecurityConfig1 extends WebSecurityConfigurerAdapter
 {
     @Override
@@ -35,14 +35,3 @@ public class SecurityConfig1 extends WebSecurityConfigurerAdapter
     }
 }
 
-
-abstract class xyz{
-	
-	public abstract void display();
-	
-	public void show() {
-		
-		
-	}
-	
-}

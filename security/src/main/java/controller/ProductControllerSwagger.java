@@ -1,4 +1,4 @@
-package demo.student;
+package controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import demo.model.Product;
+import demo.model.ResponseInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("v1/products")
-public class ProductController {
+@Api(value="onlinestore", description="Operations pertaining to products in Online Store")
+public class ProductControllerSwagger {
 
     private static  List<Product> PRODUCTS = new ArrayList<>();
     static {
@@ -28,12 +36,21 @@ public class ProductController {
     }
     
     @GetMapping
+    @ApiOperation(value = "View a list of available products",response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
  	public ResponseEntity<ResponseInfo<Product>> getAllArticles() {
  		List<Product> list = PRODUCTS;
  		return new ResponseEntity(new ResponseInfo<Product>("success", list), HttpStatus.OK);
  	}
 
  	@GetMapping(value = "/{id}")
+ 	@ApiOperation(value = "Search a product with an ID",response = Product.class)
  	public ResponseEntity<Product> getArticleById(@PathVariable("id") Integer productId) {
  		Product article = PRODUCTS.stream()
                 .filter(product -> productId.equals(product.getProductId()))
@@ -44,12 +61,14 @@ public class ProductController {
  		return new ResponseEntity<Product>(article, HttpStatus.OK);
  	}
  	
+ 	@ApiOperation(value = "delete a product",response = ResponseEntity.class)
  	@DeleteMapping(value = "/{id}")
  	public ResponseEntity<Void> deleteArticle(@PathVariable("id") Integer productId ) {
  		PRODUCTS.removeIf(product -> productId.equals(product.getProductId()));
  		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
  	}
  		
+    @ApiOperation(value = "Add a product")
  	@PostMapping(consumes = "application/json" ,produces = "application/json")
  	public ResponseEntity<Void> addArticle(@RequestBody Product article, UriComponentsBuilder builder) {
  		Integer productId = article.getProductId();        

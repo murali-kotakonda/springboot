@@ -2,9 +2,10 @@ Requirement:
 -----------------
 Allow /v1/products/** only for user1:
 /v1/products/** CALLS CAN BE DONE ONLY by user1 for others it throws 403.
+
 user1 cannot access    /v1/catalog/** API calls
- user2 can access GET,POST,PUT DELETE FOR /v1/catalog/** API calls
- user3 can access GET /v1/catalog/** API calls
+user2 can access GET,POST,PUT DELETE FOR /v1/catalog/** API calls
+user3 can access GET /v1/catalog/** API calls
  
  
  

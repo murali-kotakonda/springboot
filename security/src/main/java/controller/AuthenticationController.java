@@ -1,4 +1,4 @@
-package demo.student;
+package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jwt.AppUtil;
-import jwt.RequestCredentials;
+import jwt.AuthenticationRequest;
 
 @RestController
 public class AuthenticationController {
@@ -17,8 +17,8 @@ public class AuthenticationController {
 	@Autowired
 	AuthenticationManager authenticationManager;
 	
-	 @PostMapping("/authenticate")
-	    public String generateToken(@RequestBody RequestCredentials authRequest) throws Exception {
+	@PostMapping("/authenticate")
+	    public String generateToken(@RequestBody AuthenticationRequest authRequest) throws Exception {
 		 Authentication authenticate =  null; 
 		 try {
 			 authenticate= authenticationManager.authenticate(
@@ -27,6 +27,7 @@ public class AuthenticationController {
 	        } catch (Exception ex) {
 	            throw new Exception("inavalid username/password");
 	        }
+	        //return "token generated"; 
 	        return AppUtil.generateToken(authenticate);
 	    }
 }

@@ -19,8 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
-import jwt.JwtConfig;
-import jwt.RequestCredentials;
+import jwt.AuthenticationRequest;
 
 public class JwtAuthenticationFilter2 extends UsernamePasswordAuthenticationFilter {
 
@@ -41,8 +40,8 @@ public class JwtAuthenticationFilter2 extends UsernamePasswordAuthenticationFilt
                                                 HttpServletResponse response) throws AuthenticationException {
 
         try {
-        	RequestCredentials authenticationRequest = new ObjectMapper()
-                    .readValue(request.getInputStream(), RequestCredentials.class);
+        	AuthenticationRequest authenticationRequest = new ObjectMapper()
+                    .readValue(request.getInputStream(), AuthenticationRequest.class);
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getUsername(),

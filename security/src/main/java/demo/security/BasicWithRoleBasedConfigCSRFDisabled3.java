@@ -1,4 +1,4 @@
-package demo.config;
+package demo.security;
 
 
 import static demo.config.util.ApplicationUserRole.*;

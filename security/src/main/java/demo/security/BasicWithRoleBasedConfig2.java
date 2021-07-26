@@ -1,11 +1,11 @@
-package demo.config;
+package demo.security;
 
-import static demo.config.util.ApplicationUserRole.ADMIN;
+
+import static demo.config.util.ApplicationUserRole.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,33 +18,24 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 //@Configuration
 //@EnableWebSecurity
-public class BasicWithRoleBasedPermissiomBasedConfig4 extends WebSecurityConfigurerAdapter {
+public class BasicWithRoleBasedConfig2 extends WebSecurityConfigurerAdapter {
 
-    private static final String CATALOG_WRITE = "catalog:write";
-    private static final String CATALOG_READ = "catalog:read";
-	private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public BasicWithRoleBasedPermissiomBasedConfig4(PasswordEncoder passwordEncoder) {
+    public BasicWithRoleBasedConfig2(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	 http
-         .csrf().disable() 
+        http
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-               
-               .antMatchers("/v1/products/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication 
-                
-              .antMatchers(HttpMethod.DELETE, "/v1/catalog/**").hasAuthority(CATALOG_WRITE)
-              .antMatchers(HttpMethod.POST, "/v1/catalog/**").hasAuthority(CATALOG_WRITE)
-              .antMatchers(HttpMethod.PUT, "/v1/catalog//**").hasAuthority(CATALOG_WRITE)
-              .antMatchers(HttpMethod.GET,"/v1/catalog/**").hasAuthority(CATALOG_READ)
-              
-              //.antMatchers(HttpMethod.GET,"/v1/catalog/**").hasAnyRole(ADMIN.name() ,AGENT.name() )
-                
+
+                .antMatchers("/product/**")
+                //.hasAnyRole(ADMIN.name(),AGENT.name(),CUSTOMER.name()) //CODE FOR role based authentication
+                .hasAnyRole(ADMIN.name()) //CODE FOR role based authentication
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -57,22 +48,19 @@ public class BasicWithRoleBasedPermissiomBasedConfig4 extends WebSecurityConfigu
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password(passwordEncoder.encode("password123"))
-                //.roles(ADMIN.name()) 
-                .authorities("ROLE_"+ADMIN.name()) //add as ROLE_ADMIN
+                .roles(ADMIN.name()) // ROLE_AGENT , can read product
                 .build();
 
         UserDetails user2 = User.builder()
                 .username("user2")
                 .password(passwordEncoder.encode("password123"))
-               // .roles(AGENT.name())  
-                .authorities(CATALOG_READ,CATALOG_WRITE) //add as ROLE_AGENT
+                .roles(AGENT.name()) // ROLE_ADMIN can read product and write product
                 .build();
 
         UserDetails user3 = User.builder()
                 .username("user3")
                 .password(passwordEncoder.encode("password123"))
-                //.roles(CUSTOMER.name()) 
-                .authorities(CATALOG_READ) //add as ROLE_CUSTOMER
+                .roles(CUSTOMER.name()) // ROLE_ADMINTRAINEE
                 .build();
 
         return new InMemoryUserDetailsManager(
@@ -80,5 +68,6 @@ public class BasicWithRoleBasedPermissiomBasedConfig4 extends WebSecurityConfigu
                 user2,
                 user3
         );
+
     }
 }

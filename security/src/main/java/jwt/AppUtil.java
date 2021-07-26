@@ -11,6 +11,7 @@ import io.jsonwebtoken.security.Keys;
 public class AppUtil {
 
 	public static final byte[] SECRET = "mYsecmYsemYsmYsecretmYsemYsecretKEYcretKEYKEYecretKEYcretKEYretKEY".getBytes();
+	
 	public static String generateToken(Authentication authResult) {
 		return Jwts.builder()
                 .setSubject(authResult.getName())

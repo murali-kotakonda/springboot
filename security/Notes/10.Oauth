@@ -68,10 +68,12 @@ client gets two tokens
 
 
 
+
+
 implicit flow:
 ----------------------------
-- not so secured approach
 - used for short lives access tokens
+- not so secured approach
 
 
 client gets one tokens
@@ -81,8 +83,8 @@ access token
 2.client contacts the authorization server.
 3.authorization server asks the user for grant permissions
 4.user grants the persmission
-7. authorization server generated the access token and shares to the client
-8.client now uses the access token and passes to the resources server for fetching the resouce.
+5. authorization server generated the access token and shares to the client
+6.client now uses the access token and passes to the resources server for fetching the resouce.
 
                        
 

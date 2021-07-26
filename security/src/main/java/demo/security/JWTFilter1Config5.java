@@ -1,4 +1,4 @@
-package demo.config;
+package demo.security;
 
 import static demo.config.util.ApplicationUserRole.ADMIN;
 
@@ -17,8 +17,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import jwt.JwtAuthenticationFilter;
+import jwt.JwtTokenGeneratorFilter;
 import jwt.JwtTokenVerifier;
 
 /**
@@ -31,19 +32,16 @@ user1 cannot access    /v1/catalog/** API calls
  user3 can access GET /v1/catalog/** API calls
  
  */
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
 
     private static final String CATALOG_WRITE = "catalog:write";
     private static final String CATALOG_READ = "catalog:read";
 	private final PasswordEncoder passwordEncoder;
 
-	@Autowired
-	AuthenticationEntryPoint entryPoint;
-	
 	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-    @Override
+    @Override //required for the authentication controller
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
@@ -57,16 +55,8 @@ public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	  http
           .csrf().disable()
-          .sessionManagement()
-              .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-          .and()
-          .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-          .addFilterAfter(new JwtTokenVerifier(), JwtAuthenticationFilter.class)
+          .addFilterAfter(new JwtTokenVerifier(), UsernamePasswordAuthenticationFilter.class)
           .authorizeRequests()
-          
-          // .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-          //.antMatchers("/product/**").hasRole("admin")
-          
           .antMatchers("/authenticate").permitAll() //for jwt token generation
          
           .antMatchers("/v1/products/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication 
@@ -77,11 +67,7 @@ public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
           .antMatchers(HttpMethod.GET,"/v1/catalog/**").hasAuthority(CATALOG_READ)
          
           .anyRequest()
-          .authenticated()
-          
-          .and().exceptionHandling().authenticationEntryPoint(entryPoint)//optional to use this line ,invoked when token is incorrect
-          
-          ;
+          .authenticated();
     }
 
     @Override
@@ -90,22 +76,19 @@ public class JWTFilter1Config5 extends WebSecurityConfigurerAdapter {
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password(passwordEncoder.encode("password123"))
-                //.roles(ADMIN.name()) 
-                .authorities("ROLE_"+ADMIN.name()) //add as ROLE_ADMIN
+                .authorities("ROLE_"+ADMIN.name())  
                 .build();
 
         UserDetails user2 = User.builder()
                 .username("user2")
                 .password(passwordEncoder.encode("password123"))
-               // .roles(AGENT.name())  
-                .authorities(CATALOG_READ,CATALOG_WRITE) //add as ROLE_AGENT
+                .authorities(CATALOG_READ,CATALOG_WRITE)  
                 .build();
 
         UserDetails user3 = User.builder()
                 .username("user3")
                 .password(passwordEncoder.encode("password123"))
-                //.roles(CUSTOMER.name()) 
-                .authorities(CATALOG_READ) //add as ROLE_CUSTOMER
+                .authorities(CATALOG_READ) 
                 .build();
 
         return new InMemoryUserDetailsManager(

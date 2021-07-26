@@ -1,4 +1,4 @@
-package demo.student;
+package demo.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.List;
 public class ResponseInfo<T> {
 
 	private String status;
-	private List<T> products = new ArrayList<>();
+	private List<T> data = new ArrayList<>();
 
 	public ResponseInfo(String status, List<T> products) {
 		super();
 		this.status = status;
-		this.products.addAll(products);
+		this.data.addAll(products);
 	}
 
 	public ResponseInfo() {
@@ -26,7 +26,7 @@ public class ResponseInfo<T> {
 	public ResponseInfo(String status, T product) {
 		super();
 		this.status = status;
-		this.products.add(product);
+		this.data.add(product);
 	}
 
 	public String getStatus() {
@@ -37,12 +37,12 @@ public class ResponseInfo<T> {
 		this.status = status;
 	}
 
-	public List<T> getProducts() {
-		return products;
+	public List<T> getData() {
+		return data;
 	}
 
-	public void setProducts(List<T> products) {
-		this.products = products;
+	public void setData(List<T> data) {
+		this.data = data;
 	}
 
 }

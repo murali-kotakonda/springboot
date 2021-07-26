@@ -14,35 +14,34 @@ authorities   -> recommended
 How to ADD new user to inmemory db:
 -------------------------------------------
 -> override the userDetailsService method  
-  @Override
+    @Override
     @Bean
     protected UserDetailsService userDetailsService() {
-        UserDetails annaSmithUser = User.builder()
+        UserDetails user1 = User.builder()
                 .username("user1")
                 .password(passwordEncoder.encode("password"))
                 .roles("STUDENT") // ROLE_STUDENT
                 .build();
 
-        UserDetails lindaUser = User.builder()
+        UserDetails user2 = User.builder()
                 .username("user2")
                 .password(passwordEncoder.encode("password123"))
                 .roles("ADMIN") // ROLE_ADMIN
                 .build();
 
-        UserDetails tomUser = User.builder()
+        UserDetails user3 = User.builder()
                 .username("user3")
                 .password(passwordEncoder.encode("password123"))
                 .roles("AGENT") // ROLE_ADMINTRAINEE
                 .build();
 
         return new InMemoryUserDetailsManager(
-                annaSmithUser,
-                lindaUser,
-                tomUser
+                user1,
+                user2,
+                user3
         );
 
     }
-}
 
 
 
@@ -76,7 +75,7 @@ There are two roles in the application:
 For Role based authnetication:
 -----------------------------------------
 Add the line   
-antMatchers("/api/**").hasRole("STUDENT") SO THAT ONLY USER WITH ROLE 'STUDENT' can able to access the API.
+antMatchers("/product/**").hasRole("STUDENT") ->  ONLY USER WITH ROLE 'STUDENT' can able to access the API.
 
   @Override
     protected void configure(HttpSecurity http) throws Exception {

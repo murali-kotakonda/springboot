@@ -1,4 +1,4 @@
-
+use annotation @PreAuthorize for the controller class
 //    hasRole('ROLE_') hasAnyRole('ROLE_') hasAuthority('permission') hasAnyAuthority('permission')
 
     @GetMapping

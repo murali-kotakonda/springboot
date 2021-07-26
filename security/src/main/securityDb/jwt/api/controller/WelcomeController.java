@@ -1,6 +1,6 @@
 package jwt.api.controller;
 
-import jwt.RequestCredentials;
+import jwt.AuthenticationRequest;
 import jwt.api.util.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class WelcomeController {
     }
 
     @PostMapping("/authenticaote")
-    public String generateToken(@RequestBody RequestCredentials authRequest) throws Exception {
+    public String generateToken(@RequestBody AuthenticationRequest authRequest) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())

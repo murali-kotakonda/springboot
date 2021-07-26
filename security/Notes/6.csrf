@@ -2,18 +2,9 @@ cross site request forgery:
 
 use csrf only for browsers and disble for web service calls
 
-how to work with csrf in the web services:
----------------------------------------------
-1.enable the csrf tokne (ex: remove code for  http.csrf().disable() ) 
 
-2.TAKE XSRF-TOKEN as response from the 1st response
-
-3.Add "X-XSRF-TOKEN" as the header param to the 2nd request (POST/PUT/DELETE) and its a  mandatory header param if csrf is enabled.
-
-
-
-alternate way to generate csrf token:
--------------------------------------------
+alternate way to generate csrf token to response cookie:
+--------------------------------------------------------------
  @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -27,3 +18,13 @@ alternate way to generate csrf token:
                 .and()
                 .httpBasic();
     }
+    
+    
+
+how to work with csrf in the web services:
+---------------------------------------------
+1.enable the csrf tokne (ex: remove code for  http.csrf().disable() ) 
+
+2.TAKE XSRF-TOKEN as response from the 1st response
+
+3.Add "X-XSRF-TOKEN" as the header param to the 2nd request (POST/PUT/DELETE) and its a  mandatory header param if csrf is enabled.

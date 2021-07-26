@@ -1,11 +1,11 @@
 package jwt;
 
-public class RequestCredentials {
+public class AuthenticationRequest {
 
     private String username;
     private String password;
 
-    public RequestCredentials() {
+    public AuthenticationRequest() {
     }
 
     public String getUsername() {

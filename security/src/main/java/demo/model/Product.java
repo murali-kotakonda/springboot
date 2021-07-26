@@ -1,4 +1,4 @@
-package demo.student;
+package demo.model;
 
 
 public class Product {

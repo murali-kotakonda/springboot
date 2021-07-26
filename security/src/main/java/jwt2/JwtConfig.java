@@ -1,4 +1,4 @@
-package jwt;
+package jwt2;
 
 import com.google.common.net.HttpHeaders;
 import io.jsonwebtoken.security.Keys;

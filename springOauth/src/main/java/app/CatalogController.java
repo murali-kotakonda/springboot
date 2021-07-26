@@ -7,14 +7,12 @@ import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -26,6 +24,14 @@ public class CatalogController {
 		return "Hello "+principal.getName();
 	}
 	
+	  /*@GetMapping("/")
+		@ResponseBody
+		public Principal message(Principal principal) {
+			return principal;
+		}*/
+		
+		
+	
     private static  List<Catalog> CATALOGS = new ArrayList<>();
     static {
     	CATALOGS.add(new Catalog(1, "Mobiles"));
@@ -34,13 +40,7 @@ public class CatalogController {
     	CATALOGS.add(new Catalog(3, "Groceries"));
     }
 	
-    /*@GetMapping("/")
-	@ResponseBody
-	public Principal message(Principal principal) {
-		return principal;
-	}*/
-	
-	
+  
     
     @GetMapping("/catalog")
     //   @PreAuthorize("hasAuthority('catalog:read')")
@@ -62,14 +62,14 @@ public class CatalogController {
  	}
  	
  	@DeleteMapping(value = "/catalog/{id}")
- 	@PreAuthorize("hasAuthority('catalog:write')")
+ 	//@PreAuthorize("hasAuthority('catalog:write')")
  	public ResponseEntity<Void> deleteArticle(@PathVariable("id") Integer CatalogId ) {
  		CATALOGS.removeIf(Catalog -> CatalogId.equals(Catalog.getCatalogId()));
  		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
  	}
  		
  	@PostMapping(value = "/catalog",consumes = "application/json" ,produces = "application/json")
- 	@PreAuthorize("hasAuthority('catalog:write')")
+ 	//@PreAuthorize("hasAuthority('catalog:write')")
  	public ResponseEntity<Void> addCatalog(@RequestBody Catalog Catalog, UriComponentsBuilder builder) {
  		Integer productId = Catalog.getCatalogId();        
  		boolean exists = CATALOGS.stream()
@@ -86,7 +86,7 @@ public class CatalogController {
  	}
  	
  	@PutMapping( value = "/catalog",produces = "application/json",consumes = "application/json")
- 	@PreAuthorize("hasAuthority('catalog:write')")
+ 	//@PreAuthorize("hasAuthority('catalog:write')")
  	public ResponseEntity<Catalog> updateCatalog(@RequestBody Catalog Catalog) {
  		Integer productId = Catalog.getCatalogId();    
  		Catalog pro = CATALOGS.stream()

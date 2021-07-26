@@ -24,7 +24,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import jwt.JwtConfig;
 
 public class JwtTokenVerifier2 extends OncePerRequestFilter {
 

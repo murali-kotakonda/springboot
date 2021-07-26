@@ -1,11 +1,11 @@
-package demo.config;
+package demo.security;
 
-
-import static demo.config.util.ApplicationUserRole.*;
+import static demo.config.util.ApplicationUserRole.ADMIN;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,24 +15,28 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-
 //@Configuration
 //@EnableWebSecurity
-public class BasicWithRoleBasedConfig2 extends WebSecurityConfigurerAdapter {
+//@EnableGlobalMethodSecurity(prePostEnabled = true) used for  controller annotation  @preauthorize
+//Refer 5.ROLE BASED for controller class PreAuthorize
+public class BasicWithRoleBasedPermissionPreAuthorizeAnnotationConfig5 extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
+    private static final String CATALOG_WRITE = "catalog:write";
+    private static final String CATALOG_READ = "catalog:read";
+	private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public BasicWithRoleBasedConfig2(PasswordEncoder passwordEncoder) {
+    public BasicWithRoleBasedPermissionPreAuthorizeAnnotationConfig5(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+    	 http
+         .csrf().disable() 
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/product/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication
+                .antMatchers("/v1/products/**").hasAnyRole(ADMIN.name()) //CODE FOR role based authentication 
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -45,19 +49,22 @@ public class BasicWithRoleBasedConfig2 extends WebSecurityConfigurerAdapter {
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password(passwordEncoder.encode("password123"))
-                .roles(ADMIN.name()) // ROLE_AGENT , can read product
+                //.roles(ADMIN.name()) 
+                .authorities("ROLE_"+ADMIN.name()) //add as ROLE_ADMIN
                 .build();
 
         UserDetails user2 = User.builder()
                 .username("user2")
                 .password(passwordEncoder.encode("password123"))
-                .roles(AGENT.name()) // ROLE_ADMIN can read product and write product
+               // .roles(AGENT.name())  
+                .authorities(CATALOG_READ,CATALOG_WRITE) //add as ROLE_AGENT
                 .build();
 
         UserDetails user3 = User.builder()
                 .username("user3")
                 .password(passwordEncoder.encode("password123"))
-                .roles(CUSTOMER.name()) // ROLE_ADMINTRAINEE
+                //.roles(CUSTOMER.name()) 
+                .authorities(CATALOG_READ) //add as ROLE_CUSTOMER
                 .build();
 
         return new InMemoryUserDetailsManager(
@@ -65,6 +72,5 @@ public class BasicWithRoleBasedConfig2 extends WebSecurityConfigurerAdapter {
                 user2,
                 user3
         );
-
     }
 }

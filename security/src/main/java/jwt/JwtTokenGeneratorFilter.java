@@ -28,11 +28,11 @@ import io.jsonwebtoken.security.Keys;
  * username and password
  *
  */
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtTokenGeneratorFilter extends UsernamePasswordAuthenticationFilter {
 
    private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JwtTokenGeneratorFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
     
@@ -44,8 +44,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                                 HttpServletResponse response) throws AuthenticationException {
 
         try {
-            RequestCredentials authenticationRequest = new ObjectMapper()
-                    .readValue(request.getInputStream(), RequestCredentials.class);
+            AuthenticationRequest authenticationRequest = new ObjectMapper()
+                    .readValue(request.getInputStream(), AuthenticationRequest.class);
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getUsername(),
