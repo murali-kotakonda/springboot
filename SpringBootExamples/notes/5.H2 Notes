@@ -1,0 +1,33 @@
+Step 1: Add H2 Database Dependency
+
+<dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <scope>runtime</scope>
+</dependency>
+
+2.Configuration:
+
+
+# H2 Database Configuration
+spring.datasource.url=jdbc:h2:mem:testdb
+//spring.datasource.url=jdbc:h2:file:./data/testdb
+//For development and unit testing, mem mode is most commonly used.
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+# Enable H2 Console
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+# JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+
+
+3.access H2 db
+http://localhost:8080/h2-console
+

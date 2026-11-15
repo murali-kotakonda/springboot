@@ -1,0 +1,254 @@
+{
+  "info": {
+    "name": "SpringBootExamples",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8079" }
+  ],
+  "item": [
+    {
+      "name": "Employee APIs",
+      "item": [
+        {
+          "name": "Hi",
+          "request": { "method": "GET", "url": "{{baseUrl}}/hi" }
+        },
+        {
+          "name": "Hi List",
+          "request": { "method": "GET", "url": "{{baseUrl}}/hiList" }
+        },
+        {
+          "name": "Hello",
+          "request": { "method": "GET", "url": "{{baseUrl}}/hello" }
+        },
+        {
+          "name": "Get Employee",
+          "request": { "method": "GET", "url": "{{baseUrl}}/emp" }
+        },
+        {
+          "name": "Get Employee List",
+          "request": { "method": "GET", "url": "{{baseUrl}}/empList" }
+        },
+        {
+          "name": "Get JSON",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/myjson",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Get XML",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/myxml",
+            "header": [{ "key": "Accept", "value": "application/xml" }]
+          }
+        },
+        {
+          "name": "Get Data (JSON or XML)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/mydata",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Get Data by Path Param",
+          "request": { "method": "GET", "url": "{{baseUrl}}/data/2000" }
+        },
+        {
+          "name": "Get Data by Request Param",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/dataParam?id=900000",
+              "query": [{ "key": "id", "value": "900000" }]
+            }
+          }
+        },
+        {
+          "name": "Get Employee by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/emp/300",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Login (user/pass path params)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/emp/kumar/kumar",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Data With All Params",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/dataWithAllParams/1224/kumar?city=Hyderabad&sal=50000",
+              "query": [
+                { "key": "city", "value": "Hyderabad" },
+                { "key": "sal", "value": "50000" }
+              ]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Create Employee",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/emp",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1001,\n  \"name\": \"John\",\n  \"salary\": 50000\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Employee",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/emp",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1001,\n  \"name\": \"John Updated\",\n  \"salary\": 60000\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/emp/1001" }
+        },
+        {
+          "name": "Delete Employee (with validation)",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/empDelete/1001" }
+        }
+      ]
+    },
+    {
+      "name": "Product APIs",
+      "item": [
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/products",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"1\",\n  \"name\": \"Laptop\",\n  \"price\": 999.99\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Products",
+          "request": { "method": "GET", "url": "{{baseUrl}}/products" }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/products/1" }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/products/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"1\",\n  \"name\": \"Laptop Updated\",\n  \"price\": 1099.99\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/products/1" }
+        }
+      ]
+    },
+    {
+      "name": "File APIs",
+      "item": [
+        {
+          "name": "Upload File",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/upload",
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "file", "type": "file", "src": "" }]
+            }
+          }
+        },
+        {
+          "name": "Download File",
+          "request": { "method": "GET", "url": "{{baseUrl}}/download" }
+        }
+      ]
+    },
+    {
+      "name": "Actuator APIs",
+      "item": [
+        {
+          "name": "Health",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/health" }
+        },
+        {
+          "name": "Info",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/info" }
+        },
+        {
+          "name": "Metrics",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/metrics" }
+        },
+        {
+          "name": "Metrics - JVM Memory",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/metrics/jvm.memory.used" }
+        },
+        {
+          "name": "Environment",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/env" }
+        },
+        {
+          "name": "Beans",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/beans" }
+        },
+        {
+          "name": "Mappings",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/mappings" }
+        },
+        {
+          "name": "Conditions",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/conditions" }
+        },
+        {
+          "name": "Config Props",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/configprops" }
+        },
+        {
+          "name": "Loggers",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/loggers" }
+        },
+        {
+          "name": "Thread Dump",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/threaddump" }
+        },
+        {
+          "name": "Heap Dump",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/heapdump" }
+        },
+        {
+          "name": "Scheduled Tasks",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actuator/scheduledtasks" }
+        }
+      ]
+    }
+  ]
+}

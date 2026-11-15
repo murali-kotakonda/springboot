@@ -1,0 +1,417 @@
+
+
+1. CREATE PRODUCT
+-------------------------------
+URL: /products
+HTTP Method: POST
+Input Format: JSON
+
+Request Body:
+{
+    "id": "P101",
+    "name": "iPhone 16",
+    "description": "Apple Smartphone",
+    "category": "Electronics",
+    "price": 999.99
+}
+
+Output Format: JSON
+Response Body:
+{
+    "id": "P101",
+    "name": "iPhone 16",
+    "description": "Apple Smartphone",
+    "category": "Electronics",
+    "price": 999.99
+}
+Status Code: 201 CREATED
+
+
+2. GET PRODUCT BY ID
+--------------------------
+URL: /products/{id}
+Example: /products/P101
+
+HTTP Method: GET
+
+Input Format:
+Path Variable
+
+
+Output Format: JSON
+
+Response Body:
+{
+    "id": "P101",
+    "name": "iPhone 16",
+    "description": "Apple Smartphone",
+    "category": "Electronics",
+    "price": 999.99
+}
+Status Code: 200 OK
+
+
+3. GET ALL PRODUCTS
+-------------------------------
+URL: /products
+HTTP Method: GET
+
+Input Format:
+N/A
+
+Output Format: JSON
+
+Response Body:
+[
+    {
+        "id": "P101",
+        "name": "iPhone 16",
+        "description": "Apple Smartphone",
+        "category": "Electronics",
+        "price": 999.99
+    },
+    {
+        "id": "P102",
+        "name": "Samsung S25",
+        "description": "Samsung Smartphone",
+        "category": "Electronics",
+        "price": 899.99
+    }
+]
+Status Code: 200 OK
+
+
+
+4. UPDATE PRODUCT BY ID
+---------------------
+URL: /products/{id}
+Example: /products/P101
+
+HTTP Method: PUT
+
+Input Format: JSON
+
+Request Body:
+{
+    "id": "P101",
+    "name": "iPhone 16 Pro",
+    "description": "Updated Apple Smartphone",
+    "category": "Electronics",
+    "price": 1199.99
+}
+
+
+Output Format: JSON
+
+Response Body:
+{
+    "id": "P101",
+    "name": "iPhone 16 Pro",
+    "description": "Updated Apple Smartphone",
+    "category": "Electronics",
+    "price": 1199.99
+}
+Status Code: 200 OK
+
+
+5.DELETE PRODUCT
+---------------------
+URL: /products/{id}
+Example: /products/P101
+
+
+HTTP Method: DELETE
+
+Input Format:
+Path Variable
+
+
+Output Format: JSON
+
+Response Body:
+
+    "message": "Product deleted successfully"
+}
+Status Code: 204 NO CONTENT
+
+
+
+Notes:
+--------
+
+
+1.Create dtos for request and response classes
+
+public class Product {
+
+    private String id;
+    private String name;
+    private String description;
+    private String category;
+    private Double price;
+
+    // Getters and Setters
+}
+
+2.create controller class for Product
+
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+
+}
+
+for contrioller class you need use @RestController
+
+
+3.create interafce and impl classes for product in service package
+for service class you need use @Service
+
+
+objects for controller, service, dao, repo , config classes should be created by spring
+
+the object for service should be created using @Autoried annotation inside the controller class
+
+@Autowired
+	private ProductService productService;
+
+
+Spring Boot REST API Development Notes
+1. Create DTO Classes
+
+Create Request and Response DTOs to exchange data between the client and server. DTOs help avoid exposing entity objects directly and provide better control over API contracts.
+
+public class ProductRequest {
+
+    private String id;
+    private String name;
+    private String description;
+    private String category;
+    private Double price;
+
+    // Getters and Setters
+}
+
+public class ProductResponse {
+
+    private String id;
+    private String name;
+    private String description;
+    private String category;
+    private Double price;
+
+    // Getters and Setters
+}
+
+2. Create Controller Class
+
+Controller classes handle incoming HTTP requests and return responses to the client.
+
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+
+}
+
+Important Annotations
+@RestController
+
+Marks the class as a REST Controller.
+Automatically converts Java objects into JSON responses.
+@RequestMapping("/products")
+
+Defines the base URL for all Product APIs.
+@GetMapping
+@PostMapping
+@PutMapping
+@PatchMapping
+@DeleteMapping
+
+Used to map specific HTTP methods to controller methods.
+3. Create Service Layer
+
+Create an interface and implementation class inside the service package.
+
+Service Interface
+public interface ProductService {
+
+    ProductResponse createProduct(ProductRequest request);
+
+    ProductResponse getProductById(String id);
+
+    List<ProductResponse> getAllProducts();
+
+    ProductResponse updateProduct(String id, ProductRequest request);
+
+    void deleteProduct(String id);
+}
+
+Service Implementation
+@Service
+public class ProductServiceImpl implements ProductService {
+
+}
+
+Important Annotation
+@Service
+
+Marks the class as a Service Layer component.
+Contains business logic.
+4. Create Repository Layer
+
+Repository layer is used to interact with the database.
+
+@Repository
+public interface ProductRepository
+        extends JpaRepository<Product, String> {
+
+}
+
+Important Annotation
+@Repository
+
+Marks the interface as a DAO/Repository component.
+Handles database operations.
+5. Dependency Injection
+
+Objects for Controller, Service, Repository, and Configuration classes should be managed by the Spring Container.
+
+Use Dependency Injection instead of creating objects using the new keyword.
+
+Autowiring Service in Controller
+@Autowired
+private ProductService productService;
+
+Better Approach (Constructor Injection)
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+}
+
+6. Create Entity Class
+
+Entity class represents the database table.
+
+@Entity
+@Table(name = "PRODUCT")
+public class Product {
+
+    @Id
+    private String id;
+
+    private String name;
+
+    private String description;
+
+    private String category;
+
+    private Double price;
+}
+
+Important Annotations
+@Entity
+
+Marks the class as a JPA Entity.
+@Table(name="PRODUCT")
+
+Maps the class to a database table.
+@Id
+
+Defines the primary key.
+7. Exception Handling
+
+Create custom exceptions and handle them globally.
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+}
+
+
+Benefits:
+
+Centralized exception handling.
+Consistent error response format.
+Cleaner controller code.
+8. Validation
+
+Validate incoming request data before processing.
+
+@NotBlank
+private String name;
+
+@NotNull
+private Double price;
+
+
+Controller:
+
+@PostMapping
+public ResponseEntity<ProductResponse> createProduct(
+        @Valid @RequestBody ProductRequest request) {
+
+}
+
+9. API Response Status Codes
+Operation	Status CodeCreate Product	201 CREATED
+Get Product	200 OK
+Get All Products	200 OK
+Update Product	200 OK
+Delete Product	204 NO CONTENT
+Invalid Data	400 BAD REQUEST
+Product Not Found	404 NOT FOUND
+Server Error	500 INTERNAL SERVER ERROR
+10. Layer Flow
+Client
+  |
+  v
+Controller
+  |
+  v
+Service
+  |
+  v
+Repository
+  |
+  v
+Database
+
+Responsibilities
+Controller → Handles HTTP Requests/Responses
+Service → Business Logic
+Repository → Database Access
+Entity → Database Mapping
+DTO → Request/Response Payload
+Exception Handler → Error Handling
+Configuration → Application Settings
+11. Common Spring Boot Annotations
+@SpringBootApplication
+@RestController
+@RequestMapping
+@GetMapping
+@PostMapping
+@PutMapping
+@PatchMapping
+@DeleteMapping
+@Service
+@Repository
+@Component
+@Autowired
+@Entity
+@Table
+@Id
+@RequestBody
+@PathVariable
+@RequestParam
+@Valid
+@ControllerAdvice
+@ExceptionHandler
+
+
+These annotations cover most of the components required to develop enterprise-level CRUD APIs using Spring Boot.

@@ -1,0 +1,311 @@
+1. What is Spring Boot Actuator?
+Spring Boot Actuator is a Spring Boot module that provides production-ready features to monitor, manage, and troubleshoot running applications.
+
+In simple terms, Actuator helps us understand the health, status, performance, and internal metrics of a Spring Boot application without writing separate monitoring APIs.
+
+Real-time example:
+
+Suppose you have deployed a Spring Boot microservice in AWS or Kubernetes. You want to know:
+- Is my application running?
+- Is the database connection working?
+- How much memory is being consumed?
+- How many API requests are being processed?
+- Are there any application errors?
+- Is Kafka or another dependent service available?
+Spring Boot Actuator provides built-in endpoints to retrieve this information.
+
+
+2. Advantages of Spring Boot Actuator
+Feature	Purpose
+.Health Monitoring	Checks application and dependency health
+2.Application Metrics	Monitors CPU, memory, JVM, threads and HTTP requests
+3.Production Readiness	Helps verify whether an application can receive traffic
+4.Environment Information	Provides application configuration information
+5.Dynamic Logging	Changes log levels without restarting the application
+6.Application Information	Displays application name, version and build details
+7.Bean Inspection	Lists Spring-managed beans
+8.Request Monitoring	Tracks API request counts and response times
+9.Monitoring Integration	Integrates with Prometheus, Grafana, Datadog, etc.
+10.Troubleshooting	Helps identify application and infrastructure issues
+
+
+3. How to Enable Spring Boot Actuator?
+Step 1: Add the Maven dependency
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+
+Step 2: Configure Actuator endpoints
+
+In application.properties:
+# Expose selected Actuator endpoints
+management.endpoints.web.exposure.include=health,info,metrics,beans,mappings
+
+# Display detailed health information
+management.endpoint.health.show-details=always
+
+# Enable environment properties for info endpoint
+management.info.env.enabled=true
+
+# Application information
+info.app.name=Payment Service
+info.app.description=Payment Microservice
+info.app.version=1.0.0
+
+Step 3: Access the Actuator endpoints
+Once the application starts, access:
+http://localhost:8080/actuator
+
+This displays the available exposed endpoints.
+By default, Spring Boot exposes only the health endpoint over HTTP. The info endpoint must be explicitly exposed to access it over HTTP.
+
+4. Important Actuator Endpoints
+Here are the most commonly used endpoints.
+Endpoint	Purpose
+/actuator	Lists available exposed endpoints
+/actuator/health	Checks application health
+/actuator/info	Displays application information
+/actuator/metrics	Lists available application metrics
+/actuator/env	Displays environment properties
+/actuator/beans	Lists Spring-managed beans
+/actuator/mappings	Lists registered API mappings
+/actuator/loggers	Views and modifies logging levels
+/actuator/threaddump	Displays thread information
+/actuator/heapdump	Generates JVM heap dump
+/actuator/prometheus	Exposes metrics in Prometheus format
+
+
+
+
+5. Detailed Explanation of Important Endpoints
+5.1 Health Endpoint – /actuator/health
+Purpose: Checks whether the application and its dependent components are functioning correctly.
+
+Example:
+GET http://localhost:8080/actuator/health
+
+Basic response:
+{
+  "status": "UP"
+}
+
+
+Possible health statuses:
+Status	        Meaning
+UP	            Component is functioning correctly
+DOWN	        Component has failed
+UNKNOWN	        Health status cannot be determined
+OUT_OF_SERVICE	Component is unavailable
+MAINTENANCE	    Component is undergoing maintenance
+
+How to get detailed health information?
+Add this configuration:
+management.endpoint.health.show-details=always
+
+Example response:
+{
+  "status": "UP",
+  "components": {
+    "db": {
+      "status": "UP",
+      "details": {
+        "database": "PostgreSQL",
+        "validationQuery": "isValid()"
+      }
+    },
+    "diskSpace": {
+      "status": "UP",
+      "details": {
+        "total": 320186871808,
+        "free": 35127861248,
+        "threshold": 10485760
+      }
+    },
+    "ping": {
+      "status": "UP"
+    }
+  }
+}
+
+
+What does it monitor?
+- Database connectivity.
+- Disk space availability.
+- Application responsiveness.
+- Messaging system connectivity, when configured.
+- Custom health indicators.
+For example, if the database goes down, the health endpoint can report:
+{
+  "status": "DOWN",
+  "components": {
+    "db": {
+      "status": "DOWN"
+    }
+  }
+}
+
+
+5.2 Info Endpoint – /actuator/info
+Purpose: Displays application-related information such as application name, description, version and build details.
+
+By default response is empty json:
+{}
+The info endpoint returns empty {} by default because Spring Boot 2.6+ disabled the env and java info contributors by default.
+
+ADD Configuration:
+management:
+  info:
+    env:
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
+
+info:
+  app:
+    name: Job Application Portal
+    description: Spring Boot REST API
+    version: 1.0.0
+
+Access:
+GET http://localhost:8080/actuator/info
+
+Response:
+{
+  "app": {
+    "name": "Job Application Portal",
+    "description": "Spring Boot REST API",
+    "version": "1.0.0"
+  }
+}
+
+
+5.3 Metrics Endpoint – /actuator/metrics
+Purpose: Provides application performance and JVM metrics.
+
+Access:
+GET http://localhost:8080/actuator/metrics
+
+
+This displays available metrics.
+
+Some commonly used metrics:
+Metric	                    Purpose
+jvm.memory.used	            JVM memory currently used
+jvm.memory.max	            Maximum JVM memory
+jvm.classes.loaded	        Number of loaded classes
+jvm.threads.live	        Number of active JVM threads
+system.cpu.usage	        System CPU utilization
+process.cpu.usage	        Application process CPU utilization
+http.server.requests	    HTTP request metrics
+process.uptime	            Application uptime
+
+Example 1: Check JVM memory usage
+GET /actuator/metrics/jvm.memory.used
+
+Example 2: Check API request metrics
+GET /actuator/metrics/http.server.requests
+
+Real-time usage:
+Suppose your microservice is experiencing slow API responses.
+You can use metrics to investigate request counts, response times, JVM memory consumption and CPU utilization.
+Note: Metrics are provided through Micrometer, which is integrated with Spring Boot Actuator.
+
+
+
+5.4 Loggers Endpoint – /actuator/loggers
+Purpose: Allows developers to view and dynamically change application logging levels without restarting the application.
+
+Supported logging levels:
+- TRACE
+- DEBUG
+- INFO
+- WARN
+- ERROR
+- OFF
+
+
+Example 1: Check current logging level
+GET /actuator/loggers/com.example.payment
+Response:
+{
+  "configuredLevel": "INFO",
+  "effectiveLevel": "INFO"
+}
+
+
+
+Example 2: Change logging level dynamically
+POST /actuator/loggers/com.example.payment
+Content-Type: application/json
+Request body:
+{
+  "configuredLevel": "DEBUG"
+}
+
+Response: 204 No Content
+Now the application logs for that package will be generated at DEBUG level and above.
+Real-time usage:
+Suppose a production API is failing intermittently.
+Instead of restarting the application or changing configuration files, developers can temporarily enable DEBUG logging for the relevant package and investigate the issue.
+
+
+5.5 Mappings Endpoint – /actuator/mappings
+Purpose: Displays all registered Spring MVC or WebFlux request mappings.
+
+Access:
+GET /actuator/mappings
+
+
+Example information:
+GET /api/users
+POST /api/users
+GET /api/users/{id}
+PUT /api/users/{id}
+DELETE /api/users/{id}
+
+Real-time usage:
+
+Useful when verifying whether REST endpoints are registered correctly or troubleshooting API mapping conflicts.
+
+
+5.6 Environment Endpoint – /actuator/env
+Purpose: Displays application environment properties, active profiles and configuration sources.
+Access:
+GET /actuator/env
+
+It can help identify:
+- Active Spring profiles.
+- Configuration property sources.
+- Environment properties.
+- Application configuration values.
+
+Real-time usage:
+Suppose your application works in DEV but fails in QA. You can investigate differences in active profiles and configuration properties.
+
+Security consideration
+This endpoint can expose sensitive configuration information. Keep it restricted and ensure sensitive values are sanitized.
+
+
+6. Liveness vs Readiness Probes
+These are particularly important when deploying Spring Boot microservices in Kubernetes.
+
+Spring Boot Actuator supports health probes.
+Probe	Endpoint	Purpose
+Liveness	/actuator/health/liveness	Checks whether the application is alive
+Readiness	/actuator/health/readiness	Checks whether the application is ready to receive traffic
+
+Liveness example:
+Suppose an application gets stuck due to an internal deadlock.
+The liveness probe can detect the unhealthy state and Kubernetes can restart the container.
+
+Readiness example:
+Suppose the application has started but is still initializing or establishing required connections.
+The readiness probe can indicate that the application is not ready to receive traffic.
+Once it becomes ready, Kubernetes can route traffic to it.
+
+Configuration:
+management.endpoint.health.probes.enabled=true

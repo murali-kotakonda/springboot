@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="deeaab02-f801-444e-8f1e-e313c4f0a78e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.core.resources.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.m2e.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.wst.common.project.facet.core.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.springframework.ide.eclipse.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logback.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/1.Microservices" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/1.Notes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/2.bootstarter" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/3.Annotations" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/4.steps for spring boot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/Spring vs boot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/micro.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/pic1_archi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/webservice.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/ProductException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/ServiceException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/notes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/AppSwaggerconfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/MyServer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/TestApp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/product/consumer/ConsumeWebService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/product/consumer/IntegrationUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/product/consumer/Test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/product/provider/Product.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/product/provider/ProductController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/product/provider/ProductResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/provider/AppResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/provider/EmpController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/provider/EmpResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/provider/EmpService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/provider/Employee.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/upload/FileUploadAndDownloadController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/steps for spring boot" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="3M8RIxkATRZaf2Eib7MGYjn1WFb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/MURALI/Documents/GitHub/springboot/SpringBootExamples",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="deeaab02-f801-444e-8f1e-e313c4f0a78e" name="Changes" comment="" />
+      <created>1794730131613</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1794730131613</updated>
+    </task>
+    <servers />
+  </component>
+</project>
