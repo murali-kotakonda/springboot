@@ -9,6 +9,8 @@
         <module name="product-service" />
         <module name="jdbc" />
         <module name="basics" />
+        <module name="inventory-service" />
+        <module name="order-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -16,7 +18,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="SpringBootExamples" options="" />
       <module name="basics" options="-parameters" />
+      <module name="inventory-service" options="-parameters" />
       <module name="jdbc" options="-parameters" />
+      <module name="order-service" options="-parameters" />
       <module name="product-service" options="-parameters" />
     </option>
   </component>

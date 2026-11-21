@@ -11,6 +11,8 @@
     <modules>
         <module>product-service</module>
         <module>basics</module>
+        <module>inventory-service</module>
+        <module>order-service</module>
     </modules>
 
     <parent>
