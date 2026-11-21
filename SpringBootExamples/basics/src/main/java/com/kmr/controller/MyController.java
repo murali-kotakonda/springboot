@@ -34,7 +34,6 @@ public class MyController {
 		this.dbname = dbname;
 	}
 	
-
 	//the com.kmr.controller method will return ResponseEntity obj  only if the response is json/xml
 	// the com.kmr.controller method will return  String   only if the response is text
 

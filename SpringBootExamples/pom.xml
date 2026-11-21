@@ -6,6 +6,12 @@
     <groupId>boot2</groupId>
     <artifactId>SpringBootExamples</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>product-service</module>
+        <module>basics</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
